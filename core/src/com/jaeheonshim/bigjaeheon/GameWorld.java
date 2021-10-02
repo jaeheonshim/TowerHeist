@@ -55,17 +55,17 @@ public class GameWorld {
 
         FixtureDef floorFixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((rectangle.width / 2 - 1f) / GameScreen.PPM, 0.85f / GameScreen.PPM);
+        shape.setAsBox((rectangle.width / 2) / GameScreen.PPM, 0.85f / GameScreen.PPM, new Vector2(0, -1.25f / GameScreen.PPM), 0);
         floorFixture.shape = shape;
 
         FixtureDef leftWallFixture = new FixtureDef();
         PolygonShape leftWallShape = new PolygonShape();
-        leftWallShape.setAsBox(1 / GameScreen.PPM, rectangle.height / GameScreen.PPM / 2, new Vector2((-rectangle.width / 2 + 1.2f) / GameScreen.PPM, -rectangle.height / GameScreen.PPM / 2), 0);
+        leftWallShape.setAsBox(1 / GameScreen.PPM, rectangle.height / GameScreen.PPM / 2, new Vector2((-rectangle.width / 2 + 1.2f) / GameScreen.PPM, -(rectangle.height + 2) / GameScreen.PPM / 2), 0);
         leftWallFixture.shape = leftWallShape;
 
         FixtureDef rightWallFixture = new FixtureDef();
         PolygonShape rightWallShape = new PolygonShape();
-        rightWallShape.setAsBox(1 / GameScreen.PPM, rectangle.height / GameScreen.PPM / 2, new Vector2((rectangle.width / 2 - 1.2f) / GameScreen.PPM, -rectangle.height / GameScreen.PPM / 2), 0);
+        rightWallShape.setAsBox(1 / GameScreen.PPM, rectangle.height / GameScreen.PPM / 2, new Vector2((rectangle.width / 2 - 1.2f) / GameScreen.PPM, -(rectangle.height + 2) / GameScreen.PPM / 2), 0);
         rightWallFixture.shape = rightWallShape;
 
         Body body = physicsWorld.createBody(bodyDef);
@@ -130,5 +130,9 @@ public class GameWorld {
 
     public TiledMap getGameMap() {
         return gameMap;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

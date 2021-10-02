@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class Player {
@@ -58,6 +59,7 @@ public class Player {
     }
 
     public void update(float delta) {
+        System.out.println(getPosition());
         body.setLinearVelocity(MathUtils.clamp(body.getLinearVelocity().x, -MAX_VELOCITY, MAX_VELOCITY), body.getLinearVelocity().y);
 
         if(!isMoving && Math.abs(body.getLinearVelocity().x) > 0) {
@@ -90,7 +92,6 @@ public class Player {
 
     public void jump() {
         if(isTouchingGround() && canJump) {
-            System.out.println("impulse");
             body.applyLinearImpulse(0, IMPULSE_Y, 0, 0, true);
             canJump = false;
             setTouchingGround(false);
@@ -133,5 +134,9 @@ public class Player {
 
     public void setCanJump(boolean canJump) {
         this.canJump = canJump;
+    }
+
+    public Vector2 getPosition() {
+        return body.getPosition();
     }
 }
