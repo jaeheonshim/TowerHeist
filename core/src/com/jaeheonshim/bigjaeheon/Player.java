@@ -9,9 +9,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class Player {
-    public static final float MAX_VELOCITY = 18f;
+    public static final float MAX_VELOCITY = 12f;
     public static final float IMPULSE_X = 3;
-    public static final int IMPULSE_Y = 10;
+    public static final int IMPULSE_Y = 8;
     public static final int G_OFFSET = 20;
     public static final int DECEL = 90;
     public static final float WIDTH = 0.5f;
