@@ -24,6 +24,8 @@ public class GameScreen implements Screen {
 
     private Viewport viewport;
 
+    private boolean renderDebug = false;
+
     public GameScreen() {
         gameWorld = new GameWorld();
         viewport = new FitViewport(60, 50);
@@ -51,7 +53,9 @@ public class GameScreen implements Screen {
         gameWorld.renderMap(mapRenderer);
         gameWorld.render(spriteBatch);
 
-        debugRenderer.render(gameWorld.getPhysicsWorld(), viewport.getCamera().combined);
+        if(renderDebug) {
+            debugRenderer.render(gameWorld.getPhysicsWorld(), viewport.getCamera().combined);
+        }
     }
 
     public void processInput() {
@@ -65,6 +69,10 @@ public class GameScreen implements Screen {
             gameWorld.sendInputCommand(InputCommand.MOVE_RIGHT);
         } else {
             gameWorld.sendInputCommand(InputCommand.STOP);
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
+            renderDebug = !renderDebug;
         }
     }
 
