@@ -61,6 +61,8 @@ public class GameScreen implements Screen {
     public void processInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
             gameWorld.sendInputCommand(InputCommand.JUMP);
+        } else {
+            gameWorld.sendInputCommand(InputCommand.RESET_JUMP);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {

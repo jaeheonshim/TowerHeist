@@ -11,11 +11,13 @@ import com.badlogic.gdx.physics.box2d.*;
 public class Player {
     public static final float MAX_VELOCITY = 12f;
     public static final float IMPULSE_X = 3;
-    public static final int IMPULSE_Y = 8;
+    public static final int IMPULSE_Y = 14;
     public static final int G_OFFSET = 20;
     public static final float SLIDE_FRICTION = 55;
     public static final int DECEL = 90;
     public static final float WIDTH = 0.5f;
+    public static final int WALL_BOUNCE = 10;
+    public static final int WALL_JUMP = 20;
 
     private Body body;
 
@@ -23,6 +25,7 @@ public class Player {
     private boolean touchingWallL;
     private boolean touchingWallR;
     private boolean isMoving;
+    private boolean canJump = true;
 
     private Texture texture;
 
@@ -54,11 +57,11 @@ public class Player {
         shape.dispose();
     }
 
-    public void update() {
+    public void update(float delta) {
         body.setLinearVelocity(MathUtils.clamp(body.getLinearVelocity().x, -MAX_VELOCITY, MAX_VELOCITY), body.getLinearVelocity().y);
 
         if(!isMoving && Math.abs(body.getLinearVelocity().x) > 0) {
-            body.applyForceToCenter(-DECEL * Math.signum(body.getLinearVelocity().x), 0, true);
+            body.applyForceToCenter(-(DECEL) * Math.signum(body.getLinearVelocity().x), 0, true);
             if(Math.abs(body.getLinearVelocity().x) < 0.5) {
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }
@@ -72,8 +75,9 @@ public class Player {
     }
 
     public void move(boolean left) {
+        float coef = isTouchingGround() ? 1 : 0.5f;
         isMoving = true;
-        body.applyLinearImpulse(IMPULSE_X * (left ? -1: 1), 0, 0, 0, true);
+        body.applyLinearImpulse(IMPULSE_X * coef * (left ? -1: 1), 0, 0, 0, true);
 
         if((touchingWallR && left || touchingWallL && !left) && body.getLinearVelocity().y < 0) {
             body.applyForceToCenter(0, SLIDE_FRICTION, true);
@@ -85,8 +89,25 @@ public class Player {
     }
 
     public void jump() {
-        if(isTouchingGround()) {
+        if(isTouchingGround() && canJump) {
+            System.out.println("impulse");
             body.applyLinearImpulse(0, IMPULSE_Y, 0, 0, true);
+            canJump = false;
+            setTouchingGround(false);
+        }
+
+        if(touchingWallL && canJump) {
+            body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            body.applyLinearImpulse(-WALL_BOUNCE, WALL_JUMP, 0, 0, true);
+            canJump = false;
+            setTouchingGround(false);
+        }
+
+        if(touchingWallR && canJump) {
+            body.setLinearVelocity(body.getLinearVelocity().x, 0);
+            body.applyLinearImpulse(WALL_BOUNCE, WALL_JUMP, 0, 0, true);
+            canJump = false;
+            setTouchingGround(false);
         }
 
         if(body.getLinearVelocity().y > 0) {
@@ -108,5 +129,9 @@ public class Player {
 
     public void setTouchingWallR(boolean touchingWallR) {
         this.touchingWallR = touchingWallR;
+    }
+
+    public void setCanJump(boolean canJump) {
+        this.canJump = canJump;
     }
 }

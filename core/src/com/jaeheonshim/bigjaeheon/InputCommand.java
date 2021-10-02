@@ -4,5 +4,6 @@ public enum InputCommand {
     JUMP,
     MOVE_LEFT,
     MOVE_RIGHT,
-    STOP
+    STOP,
+    RESET_JUMP
 }

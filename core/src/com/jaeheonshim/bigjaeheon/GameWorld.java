@@ -93,7 +93,7 @@ public class GameWorld {
 
     public void update(float delta) {
         physicsWorld.step(1/60f, 6, 2);
-        player.update();
+        player.update(delta);
     }
 
     public void render(SpriteBatch batch) {
@@ -117,6 +117,9 @@ public class GameWorld {
                 break;
             case STOP:
                 player.stop();
+                break;
+            case RESET_JUMP:
+                player.setCanJump(true);
                 break;
         }
     }
