@@ -13,7 +13,8 @@ public class Player {
     public static final float IMPULSE_X = 3;
     public static final int IMPULSE_Y = 10;
     public static final int G_OFFSET = 20;
-    public static final int DECEL = 80;
+    public static final int DECEL = 90;
+    public static final float WIDTH = 0.5f;
 
     private Body body;
 
@@ -37,11 +38,11 @@ public class Player {
         this.body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.5f, 0.5f);
+        shape.setAsBox(WIDTH / 2, WIDTH / 2);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 1;
+        fixtureDef.density = 4;
         fixtureDef.friction = 0;
 
         body.setUserData(this);
@@ -63,7 +64,7 @@ public class Player {
 
     public void draw(SpriteBatch batch) {
         batch.begin();
-        batch.draw(texture, body.getPosition().x - (texture.getWidth() / GameScreen.PPM / 2), body.getPosition().y - (texture.getHeight() / GameScreen.PPM / 2), texture.getWidth() / GameScreen.PPM, texture.getHeight() / GameScreen.PPM);
+        batch.draw(texture, body.getPosition().x - (WIDTH / 2), body.getPosition().y - (WIDTH / 2), WIDTH, WIDTH);
         batch.end();
     }
 
