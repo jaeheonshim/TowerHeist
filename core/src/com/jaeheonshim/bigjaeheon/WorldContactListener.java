@@ -7,23 +7,39 @@ import java.util.Objects;
 public class WorldContactListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
-        Body fA = contact.getFixtureA().getBody();
-        Body fB = contact.getFixtureB().getBody();
+        Fixture fA = contact.getFixtureA();
+        Fixture fB = contact.getFixtureB();
         Player player;
 
         if((Objects.equals(fA.getUserData(), "FLOOR") ^ Objects.equals(fB.getUserData(), "FLOOR")) && (player = getPlayer(contact)) != null) {
             player.setTouchingGround(true);
         }
+
+        if(checkXOR(contact, "WALL_L") && (player = getPlayer(contact)) != null) {
+            player.setTouchingWallL(true);
+        }
+
+        if(checkXOR(contact, "WALL_R") && (player = getPlayer(contact)) != null) {
+            player.setTouchingWallR(true);
+        }
     }
 
     @Override
     public void endContact(Contact contact) {
-        Body fA = contact.getFixtureA().getBody();
-        Body fB = contact.getFixtureB().getBody();
+        Fixture fA = contact.getFixtureA();
+        Fixture fB = contact.getFixtureB();
         Player player;
 
         if((Objects.equals(fA.getUserData(), "FLOOR") ^ Objects.equals(fB.getUserData(), "FLOOR")) && (player = getPlayer(contact)) != null) {
             player.setTouchingGround(false);
+        }
+
+        if(checkXOR(contact, "WALL_L") && (player = getPlayer(contact)) != null) {
+            player.setTouchingWallL(false);
+        }
+
+        if(checkXOR(contact, "WALL_R") && (player = getPlayer(contact)) != null) {
+            player.setTouchingWallR(false);
         }
     }
 
@@ -47,5 +63,9 @@ public class WorldContactListener implements ContactListener {
         }
 
         return null;
+    }
+
+    public boolean checkXOR(Contact contact, Object userData) {
+        return Objects.equals(contact.getFixtureA().getUserData(), userData) ^ Objects.equals(contact.getFixtureB().getUserData(), userData);
     }
 }

@@ -55,7 +55,7 @@ public class GameWorld {
 
         FixtureDef floorFixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(rectangle.width / GameScreen.PPM / 2, 0.85f / GameScreen.PPM);
+        shape.setAsBox((rectangle.width / 2 - 1f) / GameScreen.PPM, 0.85f / GameScreen.PPM);
         floorFixture.shape = shape;
 
         FixtureDef leftWallFixture = new FixtureDef();
@@ -70,9 +70,8 @@ public class GameWorld {
 
         Body body = physicsWorld.createBody(bodyDef);
         body.createFixture(floorFixture).setUserData("FLOOR");
-        body.createFixture(leftWallFixture).setUserData("WALL");
-        body.createFixture(rightWallFixture).setUserData("WALL");
-        body.setUserData("FLOOR");
+        body.createFixture(leftWallFixture).setUserData("WALL_L");
+        body.createFixture(rightWallFixture).setUserData("WALL_R");
 
         return body;
     }

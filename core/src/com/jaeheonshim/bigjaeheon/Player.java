@@ -13,12 +13,15 @@ public class Player {
     public static final float IMPULSE_X = 3;
     public static final int IMPULSE_Y = 8;
     public static final int G_OFFSET = 20;
+    public static final float SLIDE_FRICTION = 55;
     public static final int DECEL = 90;
     public static final float WIDTH = 0.5f;
 
     private Body body;
 
     private boolean touchingGround;
+    private boolean touchingWallL;
+    private boolean touchingWallR;
     private boolean isMoving;
 
     private Texture texture;
@@ -71,6 +74,10 @@ public class Player {
     public void move(boolean left) {
         isMoving = true;
         body.applyLinearImpulse(IMPULSE_X * (left ? -1: 1), 0, 0, 0, true);
+
+        if((touchingWallR && left || touchingWallL && !left) && body.getLinearVelocity().y < 0) {
+            body.applyForceToCenter(0, SLIDE_FRICTION, true);
+        }
     }
 
     public void stop() {
@@ -93,5 +100,13 @@ public class Player {
 
     public void setTouchingGround(boolean touchingGround) {
         this.touchingGround = touchingGround;
+    }
+
+    public void setTouchingWallL(boolean touchingWallL) {
+        this.touchingWallL = touchingWallL;
+    }
+
+    public void setTouchingWallR(boolean touchingWallR) {
+        this.touchingWallR = touchingWallR;
     }
 }
