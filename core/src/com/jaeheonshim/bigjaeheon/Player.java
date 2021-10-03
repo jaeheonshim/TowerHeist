@@ -138,4 +138,8 @@ public class Player {
     public Vector2 getPosition() {
         return body.getPosition();
     }
+
+    public void setPosition(Vector2 newPosition) {
+        body.setTransform(newPosition, 0);
+    }
 }

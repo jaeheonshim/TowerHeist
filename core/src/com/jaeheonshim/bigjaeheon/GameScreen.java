@@ -93,6 +93,10 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
             renderDebug = !renderDebug;
         }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            gameWorld.sendInputCommand(InputCommand.RESET);
+        }
     }
 
     @Override

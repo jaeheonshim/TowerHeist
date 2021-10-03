@@ -53,4 +53,8 @@ public class Checkpoint {
     public int getId() {
         return id;
     }
+
+    public Body getBody() {
+        return body;
+    }
 }

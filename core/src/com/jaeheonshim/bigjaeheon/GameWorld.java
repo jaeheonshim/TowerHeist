@@ -147,6 +147,9 @@ public class GameWorld {
             case RESET_JUMP:
                 player.setCanJump(true);
                 break;
+            case RESET:
+                tpToLastCheckpoint();
+                break;
         }
     }
 
@@ -164,5 +167,16 @@ public class GameWorld {
 
     public void setCurrentCheckpoint(int currentCheckpoint) {
         this.currentCheckpoint = currentCheckpoint;
+    }
+
+    public void tpToLastCheckpoint() {
+        if(currentCheckpoint != -1) {
+            Checkpoint checkpoint = checkpoints.get(currentCheckpoint);
+            Vector2 position = checkpoint.getBody().getPosition();
+            position.x += Player.WIDTH;
+            position.y += Player.WIDTH;
+
+            player.setPosition(position);
+        }
     }
 }
