@@ -19,9 +19,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen implements Screen {
     public static final float PPM = 32;
-    public static final float CAM_LERP = 0.4f;
-    public static final float MAX_WIDTH = 60;
-    public static final float MAX_HEIGHT = 50;
 
     private GameWorld gameWorld;
 
@@ -29,17 +26,13 @@ public class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer mapRenderer;
     private Box2DDebugRenderer debugRenderer;
 
-    private OrthographicCamera camera;
-    private Viewport viewport;
+    private CameraManager gameCamera;
 
     private boolean renderDebug = false;
 
     public GameScreen() {
         gameWorld = new GameWorld();
-        camera = new OrthographicCamera();
-        viewport = new ExtendViewport(30, 24, MAX_WIDTH, MAX_HEIGHT, camera);
-
-        camera.update();
+        gameCamera = new CameraManager();
 
         spriteBatch = new SpriteBatch();
         debugRenderer = new Box2DDebugRenderer();
@@ -55,23 +48,19 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(Color.WHITE);
 
-        mapRenderer.setView(camera);
-        spriteBatch.setProjectionMatrix(camera.combined);
+        mapRenderer.setView(gameCamera.getCamera());
+        spriteBatch.setProjectionMatrix(gameCamera.getCamera().combined);
 
         processInput();
         gameWorld.update(delta);
 
-        Vector2 cameraDelta = new Vector2(MathUtils.clamp(gameWorld.getPlayer().getPosition().x, viewport.getWorldWidth() / 2f, MAX_WIDTH - viewport.getWorldWidth() / 2f) - camera.position.x, MathUtils.clamp(gameWorld.getPlayer().getPosition().y, viewport.getWorldHeight() / 2f, MAX_HEIGHT - viewport.getWorldHeight() / 2f) - camera.position.y);
-        cameraDelta.scl(CAM_LERP);
-        camera.position.add(new Vector3(cameraDelta.x, cameraDelta.y, camera.position.z));
-
-        camera.update();
+        gameCamera.followPosition(gameWorld.getPlayer().getPosition());
 
         gameWorld.renderMap(mapRenderer);
         gameWorld.render(spriteBatch);
 
         if(renderDebug) {
-            debugRenderer.render(gameWorld.getPhysicsWorld(), camera.combined);
+            debugRenderer.render(gameWorld.getPhysicsWorld(), gameCamera.getCamera().combined);
         }
     }
 
@@ -101,7 +90,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+        gameCamera.getViewport().update(width, height, true);
     }
 
     @Override
