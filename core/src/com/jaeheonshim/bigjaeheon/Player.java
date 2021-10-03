@@ -59,7 +59,6 @@ public class Player {
     }
 
     public void update(float delta) {
-        System.out.println(getPosition());
         body.setLinearVelocity(MathUtils.clamp(body.getLinearVelocity().x, -MAX_VELOCITY, MAX_VELOCITY), body.getLinearVelocity().y);
 
         if(!isMoving && Math.abs(body.getLinearVelocity().x) > 0) {

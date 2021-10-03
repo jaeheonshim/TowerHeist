@@ -13,6 +13,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.jaeheonshim.bigjaeheon.game.Checkpoint;
+import com.sun.tools.javac.comp.Check;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameWorld {
     public static final Vector2 GRAVITY = new Vector2(0, -57);
@@ -21,22 +26,39 @@ public class GameWorld {
 
     private TiledMap gameMap;
     private MapLayer staticColliderLayer;
+    private MapLayer checkpointsLayer;
 
     private Player player;
+    private List<Checkpoint> checkpoints;
+    private int currentCheckpoint = -1;
 
     public GameWorld() {
         physicsWorld = new World(GRAVITY, true);
-        physicsWorld.setContactListener(new WorldContactListener());
+        physicsWorld.setContactListener(new WorldContactListener(this));
 
         player = new Player(physicsWorld);
 //        createTestGround();
         loadMap();
         configureColliders();
+        configureCheckpoints();
     }
 
     private void loadMap() {
         this.gameMap = new TmxMapLoader().load("map.tmx");
         this.staticColliderLayer = this.gameMap.getLayers().get("StaticColliders");
+        this.checkpointsLayer = this.gameMap.getLayers().get("Checkpoints");
+    }
+
+    private void configureCheckpoints() {
+        checkpoints = new ArrayList<>();
+
+        MapObjects objects = checkpointsLayer.getObjects();
+        int id = 0;
+        for(RectangleMapObject object : objects.getByType(RectangleMapObject.class)) {
+            Rectangle rect = object.getRectangle();
+            Checkpoint checkpoint = new Checkpoint(physicsWorld, new Rectangle(rect.x / GameScreen.PPM, rect.y / GameScreen.PPM, rect.width / GameScreen.PPM, rect.height / GameScreen.PPM), id++);
+            checkpoints.add(checkpoint);
+        }
     }
 
     private void configureColliders() {
@@ -97,6 +119,10 @@ public class GameWorld {
     }
 
     public void render(SpriteBatch batch) {
+        for(Checkpoint checkpoint : checkpoints) {
+            checkpoint.draw(batch, currentCheckpoint == checkpoint.getId());
+        }
+
         player.draw(batch);
     }
 
@@ -134,5 +160,9 @@ public class GameWorld {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void setCurrentCheckpoint(int currentCheckpoint) {
+        this.currentCheckpoint = currentCheckpoint;
     }
 }
