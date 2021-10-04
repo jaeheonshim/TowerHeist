@@ -12,7 +12,7 @@ public class CameraManager {
 
     public static final float MAX_WIDTH = 60;
     public static final float MAX_HEIGHT = 50;
-    public static final float ZOOM_WIDTH = 30;
+    public static final float ZOOM_WIDTH = 40;
     public static final float ZOOM_HEIGHT = 30;
 
     private OrthographicCamera camera;

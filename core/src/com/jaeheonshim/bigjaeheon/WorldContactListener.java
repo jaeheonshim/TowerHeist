@@ -32,7 +32,7 @@ public class WorldContactListener implements ContactListener {
 
         Fixture fixture;
         if((fixture = checkXOR(contact, "CHECKPOINT")) != null && (player = getPlayer(contact)) != null) {
-            world.setCurrentCheckpoint(((Checkpoint) fixture.getBody().getUserData()).getId());
+            world.setCurrentCheckpoint(((Checkpoint) fixture.getBody().getUserData()));
         }
     }
 

@@ -8,10 +8,11 @@ import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.jaeheonshim.bigjaeheon.GameScreen;
+import com.jaeheonshim.bigjaeheon.GameWorld;
 import com.jaeheonshim.bigjaeheon.Player;
 import org.w3c.dom.css.Rect;
 
-public class Checkpoint {
+public class Checkpoint extends GameObject {
     private int id;
     private Body body;
     private float height;
@@ -19,12 +20,13 @@ public class Checkpoint {
     private Texture unset;
     private Texture set;
 
-    public Checkpoint(World world, Rectangle rectangle, int id) {
+    public Checkpoint(GameWorld gameWorld, Rectangle rectangle, int id) {
+        super(gameWorld);
         this.id = id;
         unset = new Texture(Gdx.files.internal("checkpoint_unset.png"));
         set = new Texture(Gdx.files.internal("checkpoint_set.png"));
 
-        configPhysics(world, rectangle);
+        configPhysics(gameWorld.getPhysicsWorld(), rectangle);
         this.height = rectangle.height;
     }
 
@@ -44,9 +46,9 @@ public class Checkpoint {
         this.body.createFixture(fixtureDef).setUserData("CHECKPOINT");
     }
 
-    public void draw(SpriteBatch spriteBatch, boolean activated) {
+    public void draw(SpriteBatch spriteBatch) {
         spriteBatch.begin();
-        spriteBatch.draw(activated ? set : unset, body.getPosition().x, body.getPosition().y, set.getWidth() / GameScreen.PPM, height);
+        spriteBatch.draw(gameWorld.getCurrentCheckpoint() == this ? set : unset, body.getPosition().x, body.getPosition().y, set.getWidth() / GameScreen.PPM, height);
         spriteBatch.end();
     }
 
