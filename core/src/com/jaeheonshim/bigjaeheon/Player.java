@@ -58,7 +58,7 @@ public class Player {
         fixtureDef.friction = 0;
 
         body.setUserData(this);
-        body.createFixture(fixtureDef);
+        body.createFixture(fixtureDef).setUserData("PLAYER");
 
         shape.dispose();
     }

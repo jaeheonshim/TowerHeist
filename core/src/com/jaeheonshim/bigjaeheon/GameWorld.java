@@ -10,11 +10,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.jaeheonshim.bigjaeheon.game.objects.Checkpoint;
+import com.jaeheonshim.bigjaeheon.game.objects.*;
 import com.jaeheonshim.bigjaeheon.game.GameObject;
-import com.jaeheonshim.bigjaeheon.game.objects.DeathParticles;
-import com.jaeheonshim.bigjaeheon.game.objects.PlayerTrail;
-import com.jaeheonshim.bigjaeheon.game.objects.Saw;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +25,7 @@ public class GameWorld {
     private MapLayer staticColliderLayer;
     private MapLayer checkpointsLayer;
     private MapLayer sawLayer;
+    private MapLayer cannonLayer;
 
     private Player player;
     private Vector2 initialPos = new Vector2(5, 10);
@@ -57,6 +56,7 @@ public class GameWorld {
 
         configureSaws();
         configureMap();
+        configureCannons();
         configureCheckpoints();
         configureColliders();
 
@@ -76,6 +76,7 @@ public class GameWorld {
         this.staticColliderLayer = this.gameMap.getLayers().get("StaticColliders");
         this.checkpointsLayer = this.gameMap.getLayers().get("Checkpoints");
         this.sawLayer = this.gameMap.getLayers().get("Saw");
+        this.cannonLayer = this.gameMap.getLayers().get("Cannon");
     }
 
     public void configureMap() {
@@ -90,6 +91,19 @@ public class GameWorld {
             Saw saw = new Saw(this, point, currentZ);
             gameObjects.add(saw);
             renderManager.addItem(saw);
+        }
+
+        currentZ++;
+    }
+
+    private void configureCannons() {
+        MapObjects objects = cannonLayer.getObjects();
+
+        for(RectangleMapObject object : objects.getByType(RectangleMapObject.class)) {
+            Vector2 point = new Vector2(object.getRectangle().x / GameScreen.PPM, object.getRectangle().y / GameScreen.PPM);
+            Cannon cannon = new Cannon(this, point, currentZ);
+            gameObjects.add(cannon);
+            renderManager.addItem(cannon);
         }
 
         currentZ++;
