@@ -15,8 +15,8 @@ public class Saw extends GameObject {
     private Vector2 position;
     private float theta;
 
-    public Saw(GameWorld gameWorld, Vector2 position) {
-        super(gameWorld);
+    public Saw(GameWorld gameWorld, Vector2 position, int zIndex) {
+        super(gameWorld, zIndex);
         this.position = position;
 
         texture = new TextureRegion(new Texture(Gdx.files.internal("saw.png")));

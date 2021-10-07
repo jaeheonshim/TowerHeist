@@ -20,8 +20,8 @@ public class Checkpoint extends GameObject {
     private Texture unset;
     private Texture set;
 
-    public Checkpoint(GameWorld gameWorld, Rectangle rectangle, int id) {
-        super(gameWorld);
+    public Checkpoint(GameWorld gameWorld, Rectangle rectangle, int id, int zIndex) {
+        super(gameWorld, zIndex);
         this.id = id;
         unset = new Texture(Gdx.files.internal("checkpoint_unset.png"));
         set = new Texture(Gdx.files.internal("checkpoint_set.png"));

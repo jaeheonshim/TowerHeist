@@ -2,11 +2,13 @@ package com.jaeheonshim.bigjaeheon.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jaeheonshim.bigjaeheon.GameWorld;
+import com.jaeheonshim.bigjaeheon.RenderItem;
 
-public abstract class GameObject {
+public abstract class GameObject extends RenderItem {
     protected final GameWorld gameWorld;
 
-    public GameObject(GameWorld gameWorld) {
+    public GameObject(GameWorld gameWorld, int zIndex) {
+        super(zIndex);
         this.gameWorld = gameWorld;
     }
 

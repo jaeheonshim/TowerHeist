@@ -37,6 +37,8 @@ public class GameScreen implements Screen {
         spriteBatch = new SpriteBatch();
         debugRenderer = new Box2DDebugRenderer();
         mapRenderer = new OrthogonalTiledMapRenderer(gameWorld.getGameMap(), 1 / PPM);
+
+        gameWorld.setMapRenderer(mapRenderer);
     }
 
     @Override
@@ -56,7 +58,6 @@ public class GameScreen implements Screen {
 
         gameCamera.followPosition(gameWorld.getPlayer().getPosition());
 
-        gameWorld.renderMap(mapRenderer);
         gameWorld.render(spriteBatch);
 
         if(renderDebug) {

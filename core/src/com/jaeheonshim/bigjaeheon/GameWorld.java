@@ -16,8 +16,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.jaeheonshim.bigjaeheon.game.Checkpoint;
 import com.jaeheonshim.bigjaeheon.game.GameObject;
 import com.jaeheonshim.bigjaeheon.game.Saw;
-import com.sun.tools.javac.comp.Check;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,18 +31,27 @@ public class GameWorld {
 
     private Player player;
     private Checkpoint currentCheckpoint;
+
+    private OrthogonalTiledMapRenderer mapRenderer;
+    private RenderManager renderManager;
+    private int currentZ = 0;
     private List<GameObject> gameObjects = new ArrayList<>();
 
     public GameWorld() {
         physicsWorld = new World(GRAVITY, true);
         physicsWorld.setContactListener(new WorldContactListener(this));
 
+        renderManager = new RenderManager();
+
         player = new Player(physicsWorld);
 //        createTestGround();
         loadMap();
-        configureColliders();
-        configureCheckpoints();
+
         configureSaws();
+        configureMap();
+        configureCheckpoints();
+
+        configureColliders();
     }
 
     private void loadMap() {
@@ -54,22 +61,35 @@ public class GameWorld {
         this.sawLayer = this.gameMap.getLayers().get("Saw");
     }
 
+    public void configureMap() {
+        renderManager.addItem(new MapRenderer(() -> (this.mapRenderer), currentZ++));
+    }
+
     private void configureSaws() {
         MapObjects objects = sawLayer.getObjects();
+
         for(RectangleMapObject object : objects.getByType(RectangleMapObject.class)) {
             Vector2 point = new Vector2(object.getRectangle().x / GameScreen.PPM, object.getRectangle().y / GameScreen.PPM);
-            gameObjects.add(new Saw(this, point));
+            Saw saw = new Saw(this, point, currentZ);
+            gameObjects.add(saw);
+            renderManager.addItem(saw);
         }
+
+        currentZ++;
     }
 
     private void configureCheckpoints() {
         MapObjects objects = checkpointsLayer.getObjects();
+
         int id = 0;
         for(RectangleMapObject object : objects.getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
-            Checkpoint checkpoint = new Checkpoint(this, new Rectangle(rect.x / GameScreen.PPM, rect.y / GameScreen.PPM, rect.width / GameScreen.PPM, rect.height / GameScreen.PPM), id++);
+            Checkpoint checkpoint = new Checkpoint(this, new Rectangle(rect.x / GameScreen.PPM, rect.y / GameScreen.PPM, rect.width / GameScreen.PPM, rect.height / GameScreen.PPM), id++, currentZ);
             gameObjects.add(checkpoint);
+            renderManager.addItem(checkpoint);
         }
+
+        currentZ++;
     }
 
     private void configureColliders() {
@@ -134,15 +154,9 @@ public class GameWorld {
     }
 
     public void render(SpriteBatch batch) {
-        for(GameObject checkpoint : gameObjects) {
-            checkpoint.draw(batch);
-        }
+        renderManager.render(batch);
 
         player.draw(batch);
-    }
-
-    public void renderMap(OrthogonalTiledMapRenderer mapRenderer) {
-        mapRenderer.render();
     }
 
     public void sendInputCommand(InputCommand inputCommand) {
@@ -196,5 +210,9 @@ public class GameWorld {
 
     public GameObject getCurrentCheckpoint() {
         return currentCheckpoint;
+    }
+
+    public void setMapRenderer(OrthogonalTiledMapRenderer mapRenderer) {
+        this.mapRenderer = mapRenderer;
     }
 }
