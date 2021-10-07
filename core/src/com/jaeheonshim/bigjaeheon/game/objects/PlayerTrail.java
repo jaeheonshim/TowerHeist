@@ -1,10 +1,12 @@
-package com.jaeheonshim.bigjaeheon;
+package com.jaeheonshim.bigjaeheon.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.jaeheonshim.bigjaeheon.GameWorld;
+import com.jaeheonshim.bigjaeheon.Player;
 import com.jaeheonshim.bigjaeheon.game.GameObject;
 
 import java.util.HashMap;

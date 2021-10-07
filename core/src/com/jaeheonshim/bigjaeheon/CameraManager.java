@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class CameraManager {
-    public static final float CAM_LERP = 0.4f;
+    public static final float CAM_LERP = 0.2f;
 
     public static final float MAX_WIDTH = 60;
     public static final float MAX_HEIGHT = 50;

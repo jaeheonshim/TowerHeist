@@ -81,12 +81,16 @@ public class Player {
     }
 
     public void draw(SpriteBatch batch) {
+        if(gameWorld.isDead()) return;
+
         batch.begin();
         batch.draw(texture, body.getPosition().x - (WIDTH / 2), body.getPosition().y - (WIDTH / 2), WIDTH, WIDTH);
         batch.end();
     }
 
     public void move(boolean left) {
+        if(gameWorld.isDead()) return;
+
         float coef = isTouchingGround() ? 1 : 0.5f;
         isMoving = true;
         body.applyLinearImpulse(IMPULSE_X * coef * (left ? -1: 1), 0, 0, 0, true);
@@ -101,6 +105,8 @@ public class Player {
     }
 
     public void jump() {
+        if(gameWorld.isDead()) return;
+
         if(isTouchingGround() && canJump) {
             body.applyLinearImpulse(0, IMPULSE_Y, 0, 0, true);
             canJump = false;
@@ -152,5 +158,9 @@ public class Player {
 
     public void setPosition(Vector2 newPosition) {
         body.setTransform(newPosition, 0);
+    }
+
+    public Body getBody() {
+        return body;
     }
 }

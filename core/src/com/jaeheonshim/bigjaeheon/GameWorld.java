@@ -10,10 +10,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Timer;
 import com.jaeheonshim.bigjaeheon.game.objects.Checkpoint;
 import com.jaeheonshim.bigjaeheon.game.GameObject;
 import com.jaeheonshim.bigjaeheon.game.objects.DeathParticles;
+import com.jaeheonshim.bigjaeheon.game.objects.PlayerTrail;
 import com.jaeheonshim.bigjaeheon.game.objects.Saw;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,9 @@ public class GameWorld {
 
     private List<GameObject> gameObjects = new ArrayList<>();
 
+    private Countdown deathCountdown = new Countdown(1.5f);
     private boolean queueDeath = false;
+    private boolean isDead = false;
 
     public GameWorld() {
         physicsWorld = new World(GRAVITY, true);
@@ -160,7 +162,10 @@ public class GameWorld {
     }
 
     public void update(float delta) {
+        deathCountdown.update(delta);
+
         physicsWorld.step(1/60f, 6, 2);
+
         player.update(delta);
 
         for(GameObject gameObject : gameObjects) {
@@ -170,6 +175,10 @@ public class GameWorld {
         if(queueDeath) {
             this.queueDeath = false;
             this.death();
+        }
+
+        if(isDead) {
+            whileDead();
         }
     }
 
@@ -197,7 +206,7 @@ public class GameWorld {
                 player.setCanJump(true);
                 break;
             case RESET:
-                tpToLastCheckpoint();
+                death();
                 break;
         }
     }
@@ -219,12 +228,24 @@ public class GameWorld {
     }
 
     public void death() {
+        this.isDead = true;
+        deathCountdown.reset();
+        player.stop();
+        player.getBody().setActive(false);
         deathParticles.doEffect(player.getPosition());
-        tpToLastCheckpoint();
     }
 
     public void queueDeath() {
         this.queueDeath = true;
+    }
+
+    private void whileDead() {
+        if(deathCountdown.isFinished()) {
+            deathCountdown.reset();
+            tpToLastCheckpoint();
+            this.isDead = false;
+            player.getBody().setActive(true);
+        }
     }
 
     public void tpToLastCheckpoint() {
@@ -237,6 +258,8 @@ public class GameWorld {
         } else {
             player.setPosition(initialPos);
         }
+
+        player.getBody().setAwake(true);
     }
 
     public GameObject getCurrentCheckpoint() {
@@ -249,5 +272,13 @@ public class GameWorld {
 
     public PlayerTrail getPlayerTrail() {
         return playerTrail;
+    }
+
+    public List<GameObject> getGameObjects() {
+        return gameObjects;
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 }
