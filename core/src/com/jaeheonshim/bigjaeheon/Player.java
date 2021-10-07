@@ -14,11 +14,11 @@ public class Player {
     public static final float IMPULSE_X = 3;
     public static final int IMPULSE_Y = 14;
     public static final int G_OFFSET = 20;
-    public static final float SLIDE_FRICTION = 55;
-    public static final int DECEL = 90;
+    public static final float SLIDE_VELOCITY = 0.5f;
+    public static final int DECEL = 110;
     public static final float WIDTH = 0.5f;
-    public static final int WALL_BOUNCE = 10;
-    public static final int WALL_JUMP = 20;
+    public static final int WALL_BOUNCE = 12;
+    public static final int WALL_JUMP = 18;
 
     private Body body;
 
@@ -81,7 +81,7 @@ public class Player {
         body.applyLinearImpulse(IMPULSE_X * coef * (left ? -1: 1), 0, 0, 0, true);
 
         if((touchingWallR && left || touchingWallL && !left) && body.getLinearVelocity().y < 0) {
-            body.applyForceToCenter(0, SLIDE_FRICTION, true);
+            body.setLinearVelocity(body.getLinearVelocity().x, -SLIDE_VELOCITY);
         }
     }
 

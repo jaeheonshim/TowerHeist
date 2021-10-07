@@ -108,7 +108,7 @@ public class GameWorld {
 
         FixtureDef floorFixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((rectangle.width / 2) / GameScreen.PPM, 0.85f / GameScreen.PPM, new Vector2(0, -1.25f / GameScreen.PPM), 0);
+        shape.setAsBox((rectangle.width / 2 - 1.2f) / GameScreen.PPM, (rectangle.height / 2) / GameScreen.PPM, new Vector2(0, -(rectangle.height / 2) / GameScreen.PPM), 0);
         floorFixture.shape = shape;
 
         FixtureDef leftWallFixture = new FixtureDef();
