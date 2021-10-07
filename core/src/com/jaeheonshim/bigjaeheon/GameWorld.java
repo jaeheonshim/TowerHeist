@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Timer;
 import com.jaeheonshim.bigjaeheon.game.objects.Checkpoint;
 import com.jaeheonshim.bigjaeheon.game.GameObject;
+import com.jaeheonshim.bigjaeheon.game.objects.DeathParticles;
 import com.jaeheonshim.bigjaeheon.game.objects.Saw;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class GameWorld {
     private int currentZ = 0;
 
     private PlayerTrail playerTrail;
+    private DeathParticles deathParticles;
 
     private List<GameObject> gameObjects = new ArrayList<>();
 
@@ -56,9 +58,13 @@ public class GameWorld {
         configureCheckpoints();
         configureColliders();
 
-        this.playerTrail = new PlayerTrail(this, 100);
+        this.playerTrail = new PlayerTrail(this, currentZ++);
         this.renderManager.addItem(this.playerTrail);
         this.gameObjects.add(this.playerTrail);
+
+        this.deathParticles = new DeathParticles(this, 100);
+        this.renderManager.addItem(this.deathParticles);
+        this.gameObjects.add(this.deathParticles);
 
         renderManager.initialize();
     }
@@ -213,6 +219,7 @@ public class GameWorld {
     }
 
     public void death() {
+        deathParticles.doEffect(player.getPosition());
         tpToLastCheckpoint();
     }
 
