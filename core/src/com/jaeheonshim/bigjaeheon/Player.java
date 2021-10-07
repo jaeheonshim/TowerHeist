@@ -63,7 +63,7 @@ public class Player {
 
         if(!isMoving && Math.abs(body.getLinearVelocity().x) > 0) {
             body.applyForceToCenter(-(DECEL) * Math.signum(body.getLinearVelocity().x), 0, true);
-            if(Math.abs(body.getLinearVelocity().x) < 0.5) {
+            if(Math.abs(body.getLinearVelocity().x) < 1.5f) {
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }
         }
