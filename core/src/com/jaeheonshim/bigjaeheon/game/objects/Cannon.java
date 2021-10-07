@@ -72,7 +72,7 @@ public class Cannon extends GameObject {
             armed = false;
         }
 
-        if(armed) {
+        if(armed && raycast(playerPosition)) {
             if(fireCountdown.isFinished()) {
                 bullets.add(new Bullet(gameWorld, position.cpy().add(MathUtils.cosDeg((theta + 180) % 360) * 0.7f, MathUtils.sinDeg((theta + 180) % 360) * 0.7f), theta + 180, zIndex));
                 fireCountdown.reset();

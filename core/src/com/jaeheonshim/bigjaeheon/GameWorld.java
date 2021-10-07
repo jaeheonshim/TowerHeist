@@ -26,6 +26,7 @@ public class GameWorld {
     private MapLayer checkpointsLayer;
     private MapLayer sawLayer;
     private MapLayer cannonLayer;
+    private MapLayer lavaLayer;
 
     private Player player;
     private Vector2 initialPos = new Vector2(5, 10);
@@ -54,6 +55,7 @@ public class GameWorld {
 //        createTestGround();
         loadMap();
 
+        configureLava();
         configureSaws();
         configureMap();
         configureCannons();
@@ -77,10 +79,22 @@ public class GameWorld {
         this.checkpointsLayer = this.gameMap.getLayers().get("Checkpoints");
         this.sawLayer = this.gameMap.getLayers().get("Saw");
         this.cannonLayer = this.gameMap.getLayers().get("Cannon");
+        this.lavaLayer = this.gameMap.getLayers().get("Lava");
     }
 
     public void configureMap() {
         renderManager.addItem(new MapRenderer(() -> (this.mapRenderer), currentZ++));
+    }
+
+    private void configureLava() {
+        MapObjects objects = lavaLayer.getObjects();
+
+        for(RectangleMapObject object : objects.getByType(RectangleMapObject.class)) {
+            Lava lava = new Lava(this, object, currentZ);
+            renderManager.addItem(lava);
+        }
+
+        currentZ++;
     }
 
     private void configureSaws() {
