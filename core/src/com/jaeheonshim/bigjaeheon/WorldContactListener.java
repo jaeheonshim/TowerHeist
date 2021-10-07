@@ -1,6 +1,7 @@
 package com.jaeheonshim.bigjaeheon;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.jaeheonshim.bigjaeheon.game.objects.Bullet;
 import com.jaeheonshim.bigjaeheon.game.objects.Checkpoint;
 
 import java.util.Objects;
@@ -18,6 +19,8 @@ public class WorldContactListener implements ContactListener {
         Fixture fB = contact.getFixtureB();
         Player player;
 
+        Fixture fixture;
+
         if((Objects.equals(fA.getUserData(), "FLOOR") ^ Objects.equals(fB.getUserData(), "FLOOR")) && (player = getPlayer(contact)) != null) {
             player.setTouchingGround(true);
         }
@@ -34,7 +37,15 @@ public class WorldContactListener implements ContactListener {
             world.queueDeath();
         }
 
-        Fixture fixture;
+        if((fixture = checkXOR(contact, "BULLET")) != null) {
+            if((player = getPlayer(contact)) != null) {
+                world.queueDeath();
+            }
+
+            Bullet bullet = ((Bullet) fixture.getBody().getUserData());
+            bullet.setQueueDestroy(true);
+        }
+
         if((fixture = checkXOR(contact, "CHECKPOINT")) != null && (player = getPlayer(contact)) != null) {
             world.setCurrentCheckpoint(((Checkpoint) fixture.getBody().getUserData()));
         }
