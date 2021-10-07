@@ -1,4 +1,4 @@
-package com.jaeheonshim.bigjaeheon.game;
+package com.jaeheonshim.bigjaeheon.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.jaeheonshim.bigjaeheon.GameScreen;
 import com.jaeheonshim.bigjaeheon.GameWorld;
 import com.jaeheonshim.bigjaeheon.Player;
+import com.jaeheonshim.bigjaeheon.game.GameObject;
 import org.w3c.dom.css.Rect;
 
 public class Checkpoint extends GameObject {

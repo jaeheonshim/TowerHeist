@@ -1,7 +1,7 @@
 package com.jaeheonshim.bigjaeheon;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.jaeheonshim.bigjaeheon.game.Checkpoint;
+import com.jaeheonshim.bigjaeheon.game.objects.Checkpoint;
 
 import java.util.Objects;
 
@@ -28,6 +28,10 @@ public class WorldContactListener implements ContactListener {
 
         if(checkXOR(contact, "WALL_R") != null && (player = getPlayer(contact)) != null) {
             player.setTouchingWallR(true);
+        }
+
+        if(checkXOR(contact, "DEATH") != null && (player = getPlayer(contact)) != null) {
+            world.queueDeath();
         }
 
         Fixture fixture;

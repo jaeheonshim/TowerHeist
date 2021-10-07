@@ -30,16 +30,16 @@ public class Player {
 
     private Texture texture;
 
-    public Player(World world) {
-        this.initPhysics(world);
+    public Player(World world, Vector2 initialPos) {
+        this.initPhysics(world, initialPos);
 
         texture = new Texture(Gdx.files.internal("player.png"));
     }
 
-    private void initPhysics(World world) {
+    private void initPhysics(World world, Vector2 initialPos) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(5, 10);
+        bodyDef.position.set(initialPos);
         bodyDef.fixedRotation = true;
 
         this.body = world.createBody(bodyDef);

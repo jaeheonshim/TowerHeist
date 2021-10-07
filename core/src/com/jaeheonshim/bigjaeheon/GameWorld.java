@@ -2,20 +2,17 @@ package com.jaeheonshim.bigjaeheon;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.jaeheonshim.bigjaeheon.game.Checkpoint;
+import com.jaeheonshim.bigjaeheon.game.objects.Checkpoint;
 import com.jaeheonshim.bigjaeheon.game.GameObject;
-import com.jaeheonshim.bigjaeheon.game.Saw;
+import com.jaeheonshim.bigjaeheon.game.objects.Saw;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +27,7 @@ public class GameWorld {
     private MapLayer sawLayer;
 
     private Player player;
+    private Vector2 initialPos = new Vector2(5, 10);
     private Checkpoint currentCheckpoint;
 
     private OrthogonalTiledMapRenderer mapRenderer;
@@ -37,13 +35,15 @@ public class GameWorld {
     private int currentZ = 0;
     private List<GameObject> gameObjects = new ArrayList<>();
 
+    private boolean queueDeath = false;
+
     public GameWorld() {
         physicsWorld = new World(GRAVITY, true);
         physicsWorld.setContactListener(new WorldContactListener(this));
 
         renderManager = new RenderManager();
 
-        player = new Player(physicsWorld);
+        player = new Player(physicsWorld, initialPos);
 //        createTestGround();
         loadMap();
 
@@ -151,6 +151,11 @@ public class GameWorld {
         for(GameObject gameObject : gameObjects) {
             gameObject.update(delta);
         }
+
+        if(queueDeath) {
+            this.queueDeath = false;
+            this.death();
+        }
     }
 
     public void render(SpriteBatch batch) {
@@ -198,6 +203,14 @@ public class GameWorld {
         this.currentCheckpoint = currentCheckpoint;
     }
 
+    public void death() {
+        tpToLastCheckpoint();
+    }
+
+    public void queueDeath() {
+        this.queueDeath = true;
+    }
+
     public void tpToLastCheckpoint() {
         if(currentCheckpoint != null) {
             Vector2 position = currentCheckpoint.getBody().getPosition();
@@ -205,6 +218,8 @@ public class GameWorld {
             position.y += Player.WIDTH;
 
             player.setPosition(position);
+        } else {
+            player.setPosition(initialPos);
         }
     }
 
