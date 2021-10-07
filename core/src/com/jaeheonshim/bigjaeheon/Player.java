@@ -20,6 +20,8 @@ public class Player {
     public static final int WALL_BOUNCE = 12;
     public static final int WALL_JUMP = 18;
 
+    private GameWorld gameWorld;
+
     private Body body;
 
     private boolean touchingGround;
@@ -30,8 +32,11 @@ public class Player {
 
     private Texture texture;
 
-    public Player(World world, Vector2 initialPos) {
-        this.initPhysics(world, initialPos);
+    private Countdown trailCountdown = new Countdown(0.05f);
+
+    public Player(GameWorld world, Vector2 initialPos) {
+        this.gameWorld = world;
+        this.initPhysics(world.getPhysicsWorld(), initialPos);
 
         texture = new Texture(Gdx.files.internal("player.png"));
     }
@@ -59,6 +64,7 @@ public class Player {
     }
 
     public void update(float delta) {
+        trailCountdown.update(delta);
         body.setLinearVelocity(MathUtils.clamp(body.getLinearVelocity().x, -MAX_VELOCITY, MAX_VELOCITY), body.getLinearVelocity().y);
 
         if(!isMoving && Math.abs(body.getLinearVelocity().x) > 0) {
@@ -66,6 +72,11 @@ public class Player {
             if(Math.abs(body.getLinearVelocity().x) < 1.5f) {
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }
+        }
+
+        if(!body.getLinearVelocity().isZero() && trailCountdown.isFinished()) {
+            gameWorld.getPlayerTrail().add(getPosition());
+            trailCountdown.reset();
         }
     }
 

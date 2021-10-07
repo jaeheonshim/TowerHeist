@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Timer;
 import com.jaeheonshim.bigjaeheon.game.objects.Checkpoint;
 import com.jaeheonshim.bigjaeheon.game.GameObject;
 import com.jaeheonshim.bigjaeheon.game.objects.Saw;
@@ -33,6 +34,9 @@ public class GameWorld {
     private OrthogonalTiledMapRenderer mapRenderer;
     private RenderManager renderManager;
     private int currentZ = 0;
+
+    private PlayerTrail playerTrail;
+
     private List<GameObject> gameObjects = new ArrayList<>();
 
     private boolean queueDeath = false;
@@ -43,15 +47,20 @@ public class GameWorld {
 
         renderManager = new RenderManager();
 
-        player = new Player(physicsWorld, initialPos);
+        player = new Player(this, initialPos);
 //        createTestGround();
         loadMap();
 
         configureSaws();
         configureMap();
         configureCheckpoints();
-
         configureColliders();
+
+        this.playerTrail = new PlayerTrail(this, 100);
+        this.renderManager.addItem(this.playerTrail);
+        this.gameObjects.add(this.playerTrail);
+
+        renderManager.initialize();
     }
 
     private void loadMap() {
@@ -108,17 +117,17 @@ public class GameWorld {
 
         FixtureDef floorFixture = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((rectangle.width / 2 - 1.2f) / GameScreen.PPM, (rectangle.height / 2f) / GameScreen.PPM, new Vector2(0, -(rectangle.height / 2f + 0.5f) / GameScreen.PPM), 0);
+        shape.setAsBox((rectangle.width / 2 - 4f) / GameScreen.PPM, (rectangle.height / 2f) / GameScreen.PPM, new Vector2(0, -(rectangle.height / 2f + 0.5f) / GameScreen.PPM), 0);
         floorFixture.shape = shape;
 
         FixtureDef leftWallFixture = new FixtureDef();
         PolygonShape leftWallShape = new PolygonShape();
-        leftWallShape.setAsBox(1 / GameScreen.PPM, rectangle.height / GameScreen.PPM / 2, new Vector2((-rectangle.width / 2 + 1.2f) / GameScreen.PPM, -(rectangle.height + 2) / GameScreen.PPM / 2), 0);
+        leftWallShape.setAsBox(1 / GameScreen.PPM, rectangle.height / GameScreen.PPM / 2, new Vector2((-rectangle.width / 2 + 1.3f) / GameScreen.PPM, -(rectangle.height + 2) / GameScreen.PPM / 2), 0);
         leftWallFixture.shape = leftWallShape;
 
         FixtureDef rightWallFixture = new FixtureDef();
         PolygonShape rightWallShape = new PolygonShape();
-        rightWallShape.setAsBox(1 / GameScreen.PPM, rectangle.height / GameScreen.PPM / 2, new Vector2((rectangle.width / 2 - 1.2f) / GameScreen.PPM, -(rectangle.height + 2) / GameScreen.PPM / 2), 0);
+        rightWallShape.setAsBox(1 / GameScreen.PPM, rectangle.height / GameScreen.PPM / 2, new Vector2((rectangle.width / 2 - 1.3f) / GameScreen.PPM, -(rectangle.height + 2) / GameScreen.PPM / 2), 0);
         rightWallFixture.shape = rightWallShape;
 
         Body body = physicsWorld.createBody(bodyDef);
@@ -229,5 +238,9 @@ public class GameWorld {
 
     public void setMapRenderer(OrthogonalTiledMapRenderer mapRenderer) {
         this.mapRenderer = mapRenderer;
+    }
+
+    public PlayerTrail getPlayerTrail() {
+        return playerTrail;
     }
 }
