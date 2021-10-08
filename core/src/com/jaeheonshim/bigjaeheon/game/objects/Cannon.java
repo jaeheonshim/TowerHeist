@@ -57,7 +57,6 @@ public class Cannon extends GameObject {
 
     @Override
     public void update(float delta) {
-        super.update(delta);
         Vector2 playerPosition = gameWorld.getPlayer().getPosition();
 
         if(playerPosition.dst2(position) <= TRACK_RADIUS) {

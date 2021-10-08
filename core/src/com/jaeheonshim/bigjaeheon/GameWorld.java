@@ -27,6 +27,7 @@ public class GameWorld {
     private MapLayer sawLayer;
     private MapLayer cannonLayer;
     private MapLayer lavaLayer;
+    private MapLayer laserLayer;
 
     private Player player;
     private Vector2 initialPos = new Vector2(5, 10);
@@ -55,16 +56,17 @@ public class GameWorld {
 //        createTestGround();
         loadMap();
 
+        this.playerTrail = new PlayerTrail(this, currentZ++);
+        this.renderManager.addItem(this.playerTrail);
+        this.gameObjects.add(this.playerTrail);
+
         configureLava();
         configureSaws();
         configureMap();
         configureCannons();
+        configureLaser();
         configureCheckpoints();
         configureColliders();
-
-        this.playerTrail = new PlayerTrail(this, currentZ++);
-        this.renderManager.addItem(this.playerTrail);
-        this.gameObjects.add(this.playerTrail);
 
         this.deathParticles = new DeathParticles(this, 100);
         this.renderManager.addItem(this.deathParticles);
@@ -80,10 +82,24 @@ public class GameWorld {
         this.sawLayer = this.gameMap.getLayers().get("Saw");
         this.cannonLayer = this.gameMap.getLayers().get("Cannon");
         this.lavaLayer = this.gameMap.getLayers().get("Lava");
+        this.laserLayer = this.gameMap.getLayers().get("Laser");
     }
 
     public void configureMap() {
         renderManager.addItem(new MapRenderer(() -> (this.mapRenderer), currentZ++));
+    }
+
+    private void configureLaser() {
+        MapObjects objects = laserLayer.getObjects();
+
+        for(RectangleMapObject object : objects.getByType(RectangleMapObject.class)) {
+            Vector2 point = new Vector2(object.getRectangle().x / GameScreen.PPM, object.getRectangle().y / GameScreen.PPM);
+            Laser saw = new Laser(this, point, currentZ);
+            gameObjects.add(saw);
+            renderManager.addItem(saw);
+        }
+
+        currentZ++;
     }
 
     private void configureLava() {
@@ -270,6 +286,7 @@ public class GameWorld {
     private void whileDead() {
         if(deathCountdown.isFinished()) {
             deathCountdown.reset();
+            resetAll();
             tpToLastCheckpoint();
             this.isDead = false;
             player.getBody().setActive(true);
@@ -308,5 +325,11 @@ public class GameWorld {
 
     public boolean isDead() {
         return isDead;
+    }
+
+    public void resetAll() {
+        for(GameObject gameObject : gameObjects) {
+            gameObject.reset();
+        }
     }
 }

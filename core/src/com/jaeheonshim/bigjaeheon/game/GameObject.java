@@ -17,4 +17,8 @@ public abstract class GameObject extends RenderItem {
     }
 
     public abstract void draw(SpriteBatch batch);
+
+    public void reset() {
+
+    }
 }
