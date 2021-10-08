@@ -99,4 +99,14 @@ public class Cannon extends GameObject {
 
         return cannonRayCallback.isPathExists();
     }
+
+    @Override
+    public void reset() {
+        for(Bullet bullet : bullets) {
+            bullet.destroy();
+            bullet.dispose();
+        }
+
+        bullets.clear();
+    }
 }
