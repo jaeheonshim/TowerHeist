@@ -4,8 +4,8 @@ gwt {
     minHeapSize="1G"
 
     src = files(file("src/")) // Needs to be in front of "modules" below.
-    modules 'com.jaeheonshim.bigjaeheon.GdxDefinition'
-    devModules 'com.jaeheonshim.bigjaeheon.GdxDefinitionSuperdev'
+    modules 'com.jaeheonshim.towerheist.GdxDefinition'
+    devModules 'com.jaeheonshim.towerheist.GdxDefinitionSuperdev'
     project.webAppDirName = 'webapp'
 
     compiler {
@@ -84,7 +84,7 @@ task addSource {
 tasks.compileGwt.dependsOn(addSource)
 tasks.draftCompileGwt.dependsOn(addSource)
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = [ "src/" ]
 
 eclipse.project.name = appName + "-html"
