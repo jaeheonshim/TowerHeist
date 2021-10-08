@@ -65,7 +65,7 @@ public class Laser extends GameObject {
         }
 
         if(playerPosition.dst2(position) <= CHARGE_RADIUS && raycast(playerPosition)) {
-            if(chargeTimer.isFinished()) {
+            if(chargeTimer.isFinished() && !gameWorld.isDead()) {
                 charge();
                 chargeTimer.reset();
             }

@@ -21,16 +21,16 @@ public class WorldContactListener implements ContactListener {
 
         Fixture fixture;
 
-        if((Objects.equals(fA.getUserData(), "FLOOR") ^ Objects.equals(fB.getUserData(), "FLOOR")) && (player = getPlayer(contact)) != null) {
-            player.setTouchingGround(true);
+        if(checkXOR(contact, "PLAYER.BOTTOM") != null && checkXOR(contact, "FLOOR") != null) {
+            world.getPlayer().setTouchingGround(true);
         }
 
-        if(checkXOR(contact, "WALL_L") != null && (player = getPlayer(contact)) != null) {
-            player.setTouchingWallL(true);
+        if(checkXOR(contact, "PLAYER.LEFT") != null && checkXOR(contact, "FLOOR") != null) {
+            world.getPlayer().setTouchingWallR(true);
         }
 
-        if(checkXOR(contact, "WALL_R") != null && (player = getPlayer(contact)) != null) {
-            player.setTouchingWallR(true);
+        if(checkXOR(contact, "PLAYER.RIGHT") != null && checkXOR(contact, "FLOOR") != null) {
+            world.getPlayer().setTouchingWallL(true);
         }
 
         if(checkXOR(contact, "DEATH") != null && (player = getPlayer(contact)) != null) {
@@ -55,18 +55,17 @@ public class WorldContactListener implements ContactListener {
     public void endContact(Contact contact) {
         Fixture fA = contact.getFixtureA();
         Fixture fB = contact.getFixtureB();
-        Player player;
 
-        if((Objects.equals(fA.getUserData(), "FLOOR") ^ Objects.equals(fB.getUserData(), "FLOOR")) && (player = getPlayer(contact)) != null) {
-            player.setTouchingGround(false);
+        if(checkXOR(contact, "PLAYER.BOTTOM") != null && checkXOR(contact, "FLOOR") != null) {
+            world.getPlayer().setTouchingGround(false);
         }
 
-        if(checkXOR(contact, "WALL_L") != null && (player = getPlayer(contact)) != null) {
-            player.setTouchingWallL(false);
+        if(checkXOR(contact, "PLAYER.LEFT") != null && checkXOR(contact, "FLOOR") != null) {
+            world.getPlayer().setTouchingWallR(false);
         }
 
-        if(checkXOR(contact, "WALL_R") != null && (player = getPlayer(contact)) != null) {
-            player.setTouchingWallR(false);
+        if(checkXOR(contact, "PLAYER.RIGHT") != null && checkXOR(contact, "FLOOR") != null) {
+            world.getPlayer().setTouchingWallL(false);
         }
     }
 

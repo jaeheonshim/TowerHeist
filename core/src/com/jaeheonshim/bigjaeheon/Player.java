@@ -50,15 +50,40 @@ public class Player {
         this.body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(WIDTH / 2, WIDTH / 2);
+        shape.setAsBox((WIDTH / 2) * 0.9f, (WIDTH / 2) * 0.9f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 4;
         fixtureDef.friction = 0;
 
+        PolygonShape bottomCollider = new PolygonShape();
+        bottomCollider.setAsBox(WIDTH / 2 - 0.05f, 0.05f, new Vector2(0, -(WIDTH / 2 - 0.025f)), 0);
+
+        PolygonShape leftCollider = new PolygonShape();
+        leftCollider.setAsBox(0.05f, (WIDTH / 2 - 0.05f), new Vector2(-(WIDTH / 2 - 0.025f), 0.025f), 0);
+
+        PolygonShape rightCollider = new PolygonShape();
+        rightCollider.setAsBox(0.05f, (WIDTH / 2) - 0.05f, new Vector2((WIDTH / 2 - 0.025f), 0.025f), 0);
+
+
+        FixtureDef bottomFixture = new FixtureDef();
+        bottomFixture.shape = bottomCollider;
+        bottomFixture.isSensor = true;
+
+        FixtureDef leftFixture = new FixtureDef();
+        leftFixture.shape = leftCollider;
+        leftFixture.isSensor = true;
+
+        FixtureDef rightFixture = new FixtureDef();
+        rightFixture.shape = rightCollider;
+        rightFixture.isSensor = true;
+
         body.setUserData(this);
         body.createFixture(fixtureDef).setUserData("PLAYER");
+        body.createFixture(bottomFixture).setUserData("PLAYER.BOTTOM");
+        body.createFixture(leftFixture).setUserData("PLAYER.LEFT");
+        body.createFixture(rightFixture).setUserData("PLAYER.RIGHT");
 
         shape.dispose();
     }
