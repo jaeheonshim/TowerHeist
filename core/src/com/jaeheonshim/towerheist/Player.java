@@ -8,15 +8,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 public class Player {
-    public static final float MAX_VELOCITY = 12f;
+    public static final float MAX_VELOCITY = 10f;
     public static final float IMPULSE_X = 3;
-    public static final int IMPULSE_Y = 14;
+    public static final int IMPULSE_Y = 10;
     public static final int G_OFFSET = 20;
     public static final float SLIDE_VELOCITY = 0.5f;
     public static final int DECEL = 110;
     public static final float WIDTH = 0.5f;
     public static final int WALL_BOUNCE = 12;
-    public static final int WALL_JUMP = 18;
+    public static final int WALL_JUMP = 16;
 
     private GameWorld gameWorld;
 
@@ -30,6 +30,7 @@ public class Player {
 
     private Texture texture;
 
+    private Countdown jumpLeeway = new Countdown(0.08f);
     private Countdown trailCountdown = new Countdown(0.05f);
 
     public Player(GameWorld world, Vector2 initialPos) {
@@ -101,6 +102,10 @@ public class Player {
             gameWorld.getPlayerTrail().add(getPosition());
             trailCountdown.reset();
         }
+
+        if(!touchingGround) {
+            jumpLeeway.update(delta);
+        }
     }
 
     public void draw(SpriteBatch batch) {
@@ -130,7 +135,7 @@ public class Player {
     public void jump() {
         if(gameWorld.isDead()) return;
 
-        if(isTouchingGround() && canJump) {
+        if(!jumpLeeway.isFinished() && canJump) {
             body.applyLinearImpulse(0, IMPULSE_Y, 0, 0, true);
             canJump = false;
             setTouchingGround(false);
@@ -161,6 +166,10 @@ public class Player {
 
     public void setTouchingGround(boolean touchingGround) {
         this.touchingGround = touchingGround;
+
+        if(touchingGround) {
+            jumpLeeway.reset();
+        }
     }
 
     public void setTouchingWallL(boolean touchingWallL) {
