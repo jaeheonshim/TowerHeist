@@ -33,9 +33,16 @@ public class WorldContactListener implements ContactListener {
     public void changePlayerContact(Contact contact, Fixture player, Fixture other, PlayerFixtureUserData playerData, FixtureUserData otherData, boolean begin) {
         if(otherData.getFixtureType() == FixtureType.BLOCK) {
             switch(playerData.getDirection()) {
-                case BOTTOM:
-                    world.getPlayer().setTouchingGround(begin);
+                case BOTTOM: {
+                    if(begin) {
+                        world.getPlayer().setTouchingGround(true);
+                        playerData.setCurrentBlock(other);
+                    } else if(playerData.getCurrentBlock() == null || other == playerData.getCurrentBlock()) {
+                        world.getPlayer().setTouchingGround(false);
+                    }
+
                     break;
+                }
                 case LEFT:
                     world.getPlayer().setTouchingWallR(begin);
                     break;
