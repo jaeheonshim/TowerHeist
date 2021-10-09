@@ -4,15 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.BloomEffect;
+import com.crashinvaders.vfx.effects.GaussianBlurEffect;
 
 public class GameScreen implements Screen {
     public static final float PPM = 32;
 
     private GameWorld gameWorld;
+    private VfxManager vfxManager;
+    private BloomEffect bloomEffect;
 
     private SpriteBatch spriteBatch;
     private OrthogonalTiledMapRenderer mapRenderer;
@@ -27,6 +33,11 @@ public class GameScreen implements Screen {
         gameCamera = new CameraManager();
 
         spriteBatch = new SpriteBatch();
+        vfxManager = new VfxManager(Pixmap.Format.RGBA8888);
+
+        bloomEffect = new BloomEffect();
+        vfxManager.addEffect(bloomEffect);
+
         debugRenderer = new Box2DDebugRenderer();
         mapRenderer = new OrthogonalTiledMapRenderer(gameWorld.getGameMap(), 1 / PPM);
 
@@ -40,17 +51,23 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(Color.WHITE);
-
         mapRenderer.setView(gameCamera.getCamera());
         spriteBatch.setProjectionMatrix(gameCamera.getCamera().combined);
 
         processInput();
         gameWorld.update(delta);
-
         gameCamera.followPosition(gameWorld.getPlayer().getPosition());
 
+        vfxManager.cleanUpBuffers();
+        vfxManager.beginInputCapture();
+        ScreenUtils.clear(0.9f, 0.9f, 0.9f, 1);
+
         gameWorld.render(spriteBatch);
+
+        vfxManager.endInputCapture();
+        vfxManager.applyEffects();
+
+        vfxManager.renderToScreen();
 
         if(renderDebug) {
             debugRenderer.render(gameWorld.getPhysicsWorld(), gameCamera.getCamera().combined);
@@ -83,6 +100,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        vfxManager.resize(width, height);
         gameCamera.getViewport().update(width, height, true);
     }
 
