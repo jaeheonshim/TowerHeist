@@ -14,7 +14,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.jaeheonshim.towerheist.game.objects.*;
 import com.jaeheonshim.towerheist.game.GameObject;
-import com.jaeheonshim.towerheist.game.objects.*;
+import com.jaeheonshim.towerheist.game.physics.FixtureType;
+import com.jaeheonshim.towerheist.game.physics.FixtureUserData;
+import com.jaeheonshim.towerheist.game.physics.WorldContactListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,7 +189,7 @@ public class GameWorld {
         floorFixture.shape = shape;
 
         Body body = physicsWorld.createBody(bodyDef);
-        body.createFixture(floorFixture).setUserData("FLOOR");
+        body.createFixture(floorFixture).setUserData(new FixtureUserData(FixtureType.BLOCK));
 
         return body;
     }

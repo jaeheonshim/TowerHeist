@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.jaeheonshim.towerheist.game.physics.PlayerFixtureUserData;
 
 public class Player {
     public static final float MAX_VELOCITY = 10f;
@@ -27,6 +28,9 @@ public class Player {
     private boolean touchingWallR;
     private boolean isMoving;
     private boolean canJump = true;
+
+    // To prevent incorrect state when sliding over two adjacent fixtures
+    private Fixture currentFloorFixture;
 
     private Texture texture;
 
@@ -80,10 +84,10 @@ public class Player {
         rightFixture.isSensor = true;
 
         body.setUserData(this);
-        body.createFixture(fixtureDef).setUserData("PLAYER");
-        body.createFixture(bottomFixture).setUserData("PLAYER.BOTTOM");
-        body.createFixture(leftFixture).setUserData("PLAYER.LEFT");
-        body.createFixture(rightFixture).setUserData("PLAYER.RIGHT");
+        body.createFixture(fixtureDef).setUserData(new PlayerFixtureUserData(PlayerFixtureUserData.ContactDirection.BODY));
+        body.createFixture(bottomFixture).setUserData(new PlayerFixtureUserData(PlayerFixtureUserData.ContactDirection.BOTTOM));
+        body.createFixture(leftFixture).setUserData(new PlayerFixtureUserData(PlayerFixtureUserData.ContactDirection.LEFT));
+        body.createFixture(rightFixture).setUserData(new PlayerFixtureUserData(PlayerFixtureUserData.ContactDirection.RIGHT));
 
         shape.dispose();
     }
@@ -195,5 +199,13 @@ public class Player {
 
     public Body getBody() {
         return body;
+    }
+
+    public Fixture getCurrentFloorFixture() {
+        return currentFloorFixture;
+    }
+
+    public void setCurrentFloorFixture(Fixture currentFloorFixture) {
+        this.currentFloorFixture = currentFloorFixture;
     }
 }

@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.jaeheonshim.towerheist.GameScreen;
-import com.jaeheonshim.towerheist.GameWorld;
+import com.jaeheonshim.towerheist.*;
 import com.jaeheonshim.towerheist.game.GameObject;
+import com.jaeheonshim.towerheist.game.physics.CheckpointFixtureUserData;
 
 public class Checkpoint extends GameObject {
     private int id;
@@ -41,7 +41,7 @@ public class Checkpoint extends GameObject {
 
         this.body = world.createBody(def);
         this.body.setUserData(this);
-        this.body.createFixture(fixtureDef).setUserData("CHECKPOINT");
+        this.body.createFixture(fixtureDef).setUserData(new CheckpointFixtureUserData(this));
     }
 
     public void draw(SpriteBatch spriteBatch) {

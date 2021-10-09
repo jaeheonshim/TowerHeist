@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.jaeheonshim.towerheist.GameScreen;
 import com.jaeheonshim.towerheist.GameWorld;
 import com.jaeheonshim.towerheist.game.GameObject;
+import com.jaeheonshim.towerheist.game.physics.BulletFixtureUserData;
+import com.jaeheonshim.towerheist.game.physics.FixtureUserData;
 
 public class Bullet extends GameObject implements Disposable {
     private static final float VELOCITY = 15;
@@ -40,9 +42,8 @@ public class Bullet extends GameObject implements Disposable {
         fixtureDef.isSensor = true;
 
         this.body = world.createBody(bodyDef);
-        this.body.setUserData(this);
         this.fixture = this.body.createFixture(fixtureDef);
-        fixture.setUserData("BULLET");
+        fixture.setUserData(new BulletFixtureUserData(this));
     }
 
     @Override

@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.jaeheonshim.towerheist.GameScreen;
 import com.jaeheonshim.towerheist.GameWorld;
 import com.jaeheonshim.towerheist.game.GameObject;
+import com.jaeheonshim.towerheist.game.physics.FixtureType;
+import com.jaeheonshim.towerheist.game.physics.FixtureUserData;
 
 public class Saw extends GameObject {
     public static final float ROTATION_RATE = 520;
@@ -54,7 +56,7 @@ public class Saw extends GameObject {
         fixtureDef.isSensor = true;
 
         this.body = gameWorld.getPhysicsWorld().createBody(def);
-        this.body.createFixture(fixtureDef).setUserData("DEATH");
+        this.body.createFixture(fixtureDef).setUserData(new FixtureUserData(FixtureType.DEATH));
     }
 
     public void update(float delta) {

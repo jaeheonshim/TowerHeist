@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.jaeheonshim.towerheist.CannonRayCallback;
+import com.jaeheonshim.towerheist.game.physics.CannonRayCallback;
 import com.jaeheonshim.towerheist.Countdown;
 import com.jaeheonshim.towerheist.GameScreen;
 import com.jaeheonshim.towerheist.GameWorld;

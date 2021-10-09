@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.jaeheonshim.towerheist.GameScreen;
 import com.jaeheonshim.towerheist.GameWorld;
 import com.jaeheonshim.towerheist.game.GameObject;
+import com.jaeheonshim.towerheist.game.physics.FixtureType;
+import com.jaeheonshim.towerheist.game.physics.FixtureUserData;
 
 public class Lava extends GameObject {
     private Texture texture;
@@ -41,7 +43,7 @@ public class Lava extends GameObject {
         fixtureDef.isSensor = true;
         fixtureDef.shape = shape;
 
-        gameWorld.getPhysicsWorld().createBody(bodyDef).createFixture(fixtureDef).setUserData("DEATH");
+        gameWorld.getPhysicsWorld().createBody(bodyDef).createFixture(fixtureDef).setUserData(new FixtureUserData(FixtureType.DEATH));
     }
 
     @Override
