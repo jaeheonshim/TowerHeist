@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -20,11 +21,25 @@ public class Saw extends GameObject {
     private Body body;
     private float theta;
 
+    private Vector2 start;
+    private Vector2 end;
+    private Interpolation interpolation = Interpolation.smooth;
+
+    private float stateTime;
+    private final float lifeTime = 2f;
+    private boolean forwards = true;
+
     public Saw(GameWorld gameWorld, Vector2 position, int zIndex) {
         super(gameWorld, zIndex);
         setupBody(gameWorld, position);
 
         texture = new TextureRegion(new Texture(Gdx.files.internal("saw.png")));
+    }
+
+    public Saw(GameWorld gameWorld, Vector2 start, Vector2 end, int zIndex) {
+        this(gameWorld, start, zIndex);
+        this.start = start;
+        this.end = end;
     }
 
     private void setupBody(GameWorld gameWorld, Vector2 position) {
@@ -44,6 +59,15 @@ public class Saw extends GameObject {
 
     public void update(float delta) {
         theta = (theta + ROTATION_RATE * delta) % 360;
+
+        if(start != null) {
+            stateTime += delta * (forwards ? 1 : -1);
+            float progress = stateTime / lifeTime;
+
+            if((progress >= 1 && forwards) || (progress <= 0 && !forwards)) forwards = !forwards;
+
+            body.setTransform(interpolation.apply(start.x, end.x, progress), interpolation.apply(start.y, end.y, progress), 0);
+        }
     }
 
     public void draw(SpriteBatch spriteBatch) {

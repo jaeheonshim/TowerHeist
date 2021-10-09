@@ -45,6 +45,7 @@ public class Player {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(initialPos);
         bodyDef.fixedRotation = true;
+        bodyDef.allowSleep = false;
 
         this.body = world.createBody(bodyDef);
 

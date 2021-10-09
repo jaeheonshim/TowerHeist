@@ -3,10 +3,12 @@ package com.jaeheonshim.towerheist;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -120,6 +122,16 @@ public class GameWorld {
         for(RectangleMapObject object : objects.getByType(RectangleMapObject.class)) {
             Vector2 point = new Vector2(object.getRectangle().x / GameScreen.PPM, object.getRectangle().y / GameScreen.PPM);
             Saw saw = new Saw(this, point, currentZ);
+            gameObjects.add(saw);
+            renderManager.addItem(saw);
+        }
+
+        for(PolylineMapObject object : objects.getByType(PolylineMapObject.class)) {
+            Polyline polyline = object.getPolyline();
+            Vector2 start = new Vector2(polyline.getX(), polyline.getY()).scl(1 / GameScreen.PPM);
+            Vector2 end = new Vector2(polyline.getX() + polyline.getVertices()[2], polyline.getY() + polyline.getVertices()[3]).scl(1 / GameScreen.PPM);
+
+            Saw saw = new Saw(this, start, end, currentZ);
             gameObjects.add(saw);
             renderManager.addItem(saw);
         }
