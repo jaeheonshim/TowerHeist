@@ -14,7 +14,7 @@ public class Player {
     public static final int IMPULSE_Y = 10;
     public static final int G_OFFSET = 20;
     public static final float SLIDE_VELOCITY = 0.5f;
-    public static final int DECEL = 110;
+    public static final int DECEL = 200;
     public static final float WIDTH = 0.5f;
     public static final int WALL_BOUNCE = 12;
     public static final int WALL_JUMP = 16;
@@ -96,9 +96,10 @@ public class Player {
         trailCountdown.update(delta);
         body.setLinearVelocity(MathUtils.clamp(body.getLinearVelocity().x, -MAX_VELOCITY, MAX_VELOCITY), body.getLinearVelocity().y);
 
+        System.out.println(body.getLinearVelocity().x);
         if(!isMoving && Math.abs(body.getLinearVelocity().x) > 0) {
             body.applyForceToCenter(-(DECEL) * Math.signum(body.getLinearVelocity().x), 0, true);
-            if(Math.abs(body.getLinearVelocity().x) < 1.5f) {
+            if(Math.abs(body.getLinearVelocity().x) < 3.5f) {
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }
         }
