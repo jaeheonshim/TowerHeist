@@ -120,9 +120,7 @@ public class Player {
     public void draw(SpriteBatch batch) {
         if(gameWorld.isDead()) return;
 
-        batch.begin();
         batch.draw(texture, body.getPosition().x - (WIDTH / 2), body.getPosition().y - (WIDTH / 2), WIDTH, WIDTH);
-        batch.end();
     }
 
     public void move(boolean left) {

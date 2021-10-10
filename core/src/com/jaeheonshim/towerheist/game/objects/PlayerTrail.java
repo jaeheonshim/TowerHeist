@@ -45,12 +45,10 @@ public class PlayerTrail extends GameObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.begin();
         for(Map.Entry<Vector2, Float> entry : trailElements.entrySet()) {
             batch.setColor(new Color(0xFFFFFF * 256 + (int) (Math.pow(entry.getValue() / DURATION, 2) * 256)));
             batch.draw(trail, entry.getKey().x, entry.getKey().y, Player.WIDTH * 0.5f, Player.WIDTH * 0.5f);
         }
         batch.setColor(Color.WHITE);
-        batch.end();
     }
 }

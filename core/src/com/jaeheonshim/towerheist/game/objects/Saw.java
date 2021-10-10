@@ -73,8 +73,6 @@ public class Saw extends GameObject {
     }
 
     public void draw(SpriteBatch spriteBatch) {
-        spriteBatch.begin();
         spriteBatch.draw(texture, body.getPosition().x - (texture.getRegionWidth() / GameScreen.PPM / 2f), body.getPosition().y - (texture.getRegionHeight() / GameScreen.PPM / 2f), texture.getRegionWidth() / GameScreen.PPM / 2f, texture.getRegionHeight() / GameScreen.PPM / 2f, texture.getRegionWidth() / GameScreen.PPM, texture.getRegionHeight() / GameScreen.PPM, 1, 1, theta);
-        spriteBatch.end();
     }
 }

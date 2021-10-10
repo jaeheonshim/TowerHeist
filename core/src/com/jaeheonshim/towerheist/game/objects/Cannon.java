@@ -44,9 +44,7 @@ public class Cannon extends GameObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.begin();
         batch.draw(armed ? armedTexture : safeTexture, position.x - safeTexture.getRegionWidth() / GameScreen.PPM / 2, position.y - safeTexture.getRegionHeight() / GameScreen.PPM / 2, safeTexture.getRegionWidth() / GameScreen.PPM / 2, safeTexture.getRegionHeight() / GameScreen.PPM / 2, safeTexture.getRegionWidth() / GameScreen.PPM, safeTexture.getRegionHeight() / GameScreen.PPM, 1, 1, theta + 90);
-        batch.end();
 
         for(Bullet bullet : bullets) {
             bullet.draw(batch);

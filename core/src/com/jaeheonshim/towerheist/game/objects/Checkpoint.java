@@ -47,9 +47,7 @@ public class Checkpoint extends GameObject {
     }
 
     public void draw(SpriteBatch spriteBatch) {
-        spriteBatch.begin();
         spriteBatch.draw(gameWorld.getCurrentCheckpoint() == this ? set : unset, body.getPosition().x, body.getPosition().y, set.getRegionWidth() / GameScreen.PPM, height);
-        spriteBatch.end();
     }
 
     public int getId() {

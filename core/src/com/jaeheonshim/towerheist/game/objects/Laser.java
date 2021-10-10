@@ -108,12 +108,10 @@ public class Laser extends GameObject {
         float width = draw.getRegionWidth() / GameScreen.PPM;
         float height = draw.getRegionHeight() / GameScreen.PPM;
 
-        batch.begin();
         if(chargeCount == 5) {
             drawLaser(batch, width / 2, height / 2);
         }
         batch.draw(draw, position.x - width / 2, position.y - width / 2, width / 2, height / 2, width, height, 1, 1, theta + 90);
-        batch.end();
     }
 
     private void drawLaser(SpriteBatch spriteBatch, float offsetWidth, float offsetHeight) {

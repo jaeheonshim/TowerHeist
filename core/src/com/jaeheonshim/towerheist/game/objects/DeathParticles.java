@@ -26,9 +26,7 @@ public class DeathParticles extends GameObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.begin();
         effect.draw(batch);
-        batch.end();
     }
 
     public void doEffect(Vector2 position) {

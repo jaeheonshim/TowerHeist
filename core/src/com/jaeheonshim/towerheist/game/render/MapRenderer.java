@@ -15,6 +15,9 @@ public class MapRenderer extends RenderItem {
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        // flush spritebatch to preserve z order
+        spriteBatch.end();
         renderer.get().render();
+        spriteBatch.begin();
     }
 }

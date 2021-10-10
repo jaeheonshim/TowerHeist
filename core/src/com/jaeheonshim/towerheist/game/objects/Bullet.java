@@ -48,9 +48,7 @@ public class Bullet extends GameObject implements Disposable {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.begin();
         batch.draw(bullet, body.getPosition().x - bullet.getRegionWidth() / GameScreen.PPM / 2, body.getPosition().y - bullet.getRegionHeight() / GameScreen.PPM / 2, bullet.getRegionWidth() / GameScreen.PPM, bullet.getRegionHeight() / GameScreen.PPM);
-        batch.end();
     }
 
     public void setQueueDestroy(boolean queueDestroy) {

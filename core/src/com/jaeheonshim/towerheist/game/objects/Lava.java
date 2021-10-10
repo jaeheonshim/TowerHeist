@@ -49,8 +49,6 @@ public class Lava extends GameObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.begin();
         batch.draw(texture, rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-        batch.end();
     }
 }

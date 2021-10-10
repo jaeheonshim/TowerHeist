@@ -62,7 +62,6 @@ public class Door extends GameObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.begin();
         float renderHeight;
         float progress = stateTime / OPEN_DURATION;
 
@@ -75,7 +74,6 @@ public class Door extends GameObject {
         }
 
         batch.draw(closed ? doorTexture : doorOpenTexture, body.getPosition().x - width / 2, (body.getPosition().y - this.height / 2) + this.height - renderHeight, width, renderHeight);
-        batch.end();
     }
 
     @Override

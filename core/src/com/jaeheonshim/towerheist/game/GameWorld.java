@@ -252,9 +252,12 @@ public class GameWorld {
     }
 
     public void render(SpriteBatch batch) {
-        renderManager.render(batch);
+        batch.begin();
 
+        renderManager.render(batch);
         player.draw(batch);
+
+        batch.end();
     }
 
     public void sendInputCommand(InputCommand inputCommand) {
