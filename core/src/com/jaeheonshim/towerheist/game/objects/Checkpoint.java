@@ -3,6 +3,7 @@ package com.jaeheonshim.towerheist.game.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -15,14 +16,14 @@ public class Checkpoint extends GameObject {
     private Body body;
     private float height;
 
-    private Texture unset;
-    private Texture set;
+    private TextureRegion unset;
+    private TextureRegion set;
 
     public Checkpoint(GameWorld gameWorld, Rectangle rectangle, int id, int zIndex) {
         super(gameWorld, zIndex);
         this.id = id;
-        unset = new Texture(Gdx.files.internal("checkpoint_unset.png"));
-        set = new Texture(Gdx.files.internal("checkpoint_set.png"));
+        unset = Assets.instance().fromAtlas("checkpoint_unset");
+        set = Assets.instance().fromAtlas("checkpoint_set");
 
         configPhysics(gameWorld.getPhysicsWorld(), rectangle);
         this.height = rectangle.height;
@@ -46,7 +47,7 @@ public class Checkpoint extends GameObject {
 
     public void draw(SpriteBatch spriteBatch) {
         spriteBatch.begin();
-        spriteBatch.draw(gameWorld.getCurrentCheckpoint() == this ? set : unset, body.getPosition().x, body.getPosition().y, set.getWidth() / GameScreen.PPM, height);
+        spriteBatch.draw(gameWorld.getCurrentCheckpoint() == this ? set : unset, body.getPosition().x, body.getPosition().y, set.getRegionWidth() / GameScreen.PPM, height);
         spriteBatch.end();
     }
 

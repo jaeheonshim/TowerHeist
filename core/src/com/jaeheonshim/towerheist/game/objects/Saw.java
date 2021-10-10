@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.GameScreen;
 import com.jaeheonshim.towerheist.GameWorld;
 import com.jaeheonshim.towerheist.game.GameObject;
@@ -35,7 +36,7 @@ public class Saw extends GameObject {
         super(gameWorld, zIndex);
         setupBody(gameWorld, position);
 
-        texture = new TextureRegion(new Texture(Gdx.files.internal("saw.png")));
+        texture = Assets.instance().fromAtlas("saw");
     }
 
     public Saw(GameWorld gameWorld, Vector2 start, Vector2 end, int zIndex) {

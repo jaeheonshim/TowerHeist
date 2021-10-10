@@ -3,11 +3,13 @@ package com.jaeheonshim.towerheist.game.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.GameScreen;
 import com.jaeheonshim.towerheist.GameWorld;
 import com.jaeheonshim.towerheist.game.GameObject;
@@ -15,13 +17,13 @@ import com.jaeheonshim.towerheist.game.physics.FixtureType;
 import com.jaeheonshim.towerheist.game.physics.FixtureUserData;
 
 public class Lava extends GameObject {
-    private Texture texture;
+    private TextureRegion texture;
     private Rectangle rectangle;
 
     public Lava(GameWorld gameWorld, RectangleMapObject object, int zIndex) {
         super(gameWorld, zIndex);
 
-        texture = new Texture(Gdx.files.internal("lava.png"));
+        texture = Assets.instance().fromAtlas("lava");
         rectangle = new Rectangle(
                 object.getRectangle().x / GameScreen.PPM,
                 object.getRectangle().y / GameScreen.PPM,

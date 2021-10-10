@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.GameScreen;
 import com.jaeheonshim.towerheist.GameWorld;
 import com.jaeheonshim.towerheist.game.GameObject;
@@ -15,7 +16,7 @@ public class DeathParticles extends GameObject {
         super(gameWorld, zIndex);
 
         effect = new ParticleEffect();
-        effect.load(Gdx.files.internal("death.pe"), Gdx.files.internal(""));
+        effect.load(Gdx.files.internal("death.pe"), Assets.instance().atlas());
         effect.scaleEffect(1 / GameScreen.PPM);
     }
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.Box2D;
 public class TowerHeist extends Game {
 	@Override
 	public void create () {
+		Assets.instance().loadAssets();
 		Box2D.init();
 		setScreen(new GameScreen());
 	}

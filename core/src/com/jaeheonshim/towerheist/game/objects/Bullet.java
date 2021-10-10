@@ -3,10 +3,12 @@ package com.jaeheonshim.towerheist.game.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
+import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.GameScreen;
 import com.jaeheonshim.towerheist.GameWorld;
 import com.jaeheonshim.towerheist.game.GameObject;
@@ -16,7 +18,7 @@ import com.jaeheonshim.towerheist.game.physics.FixtureUserData;
 public class Bullet extends GameObject implements Disposable {
     private static final float VELOCITY = 15;
 
-    private Texture bullet;
+    private TextureRegion bullet;
 
     private Body body;
     private Fixture fixture;
@@ -24,7 +26,7 @@ public class Bullet extends GameObject implements Disposable {
 
     public Bullet(GameWorld gameWorld, Vector2 position, float theta, int zIndex) {
         super(gameWorld, zIndex);
-        bullet = new Texture(Gdx.files.internal("bullet.png"));
+        bullet = Assets.instance().fromAtlas("bullet");
         setupPhysics(gameWorld.getPhysicsWorld(), position);
         body.setLinearVelocity(MathUtils.cosDeg(theta) * VELOCITY, MathUtils.sinDeg(theta) * VELOCITY);
     }
@@ -49,7 +51,7 @@ public class Bullet extends GameObject implements Disposable {
     @Override
     public void draw(SpriteBatch batch) {
         batch.begin();
-        batch.draw(bullet, body.getPosition().x - bullet.getWidth() / GameScreen.PPM / 2, body.getPosition().y - bullet.getHeight() / GameScreen.PPM / 2, bullet.getWidth() / GameScreen.PPM, bullet.getHeight() / GameScreen.PPM);
+        batch.draw(bullet, body.getPosition().x - bullet.getRegionWidth() / GameScreen.PPM / 2, body.getPosition().y - bullet.getRegionHeight() / GameScreen.PPM / 2, bullet.getRegionWidth() / GameScreen.PPM, bullet.getRegionHeight() / GameScreen.PPM);
         batch.end();
     }
 
@@ -69,6 +71,6 @@ public class Bullet extends GameObject implements Disposable {
 
     @Override
     public void dispose() {
-        bullet.dispose();
+
     }
 }

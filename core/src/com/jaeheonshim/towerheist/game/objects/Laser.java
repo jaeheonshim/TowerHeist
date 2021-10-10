@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.game.physics.CannonRayCallback;
 import com.jaeheonshim.towerheist.Countdown;
 import com.jaeheonshim.towerheist.GameScreen;
@@ -41,16 +42,16 @@ public class Laser extends GameObject {
 
         this.position = position;
 
-        charge0 = new TextureRegion(new Texture(Gdx.files.internal("laser_charge_0.png")));
-        charge1 = new TextureRegion(new Texture(Gdx.files.internal("laser_charge_1.png")));
-        charge2 = new TextureRegion(new Texture(Gdx.files.internal("laser_charge_2.png")));
-        charge3 = new TextureRegion(new Texture(Gdx.files.internal("laser_charge_3.png")));
-        charge4 = new TextureRegion(new Texture(Gdx.files.internal("laser_charge_4.png")));
-        armed = new TextureRegion(new Texture(Gdx.files.internal("laser_armed.png")));
-        laser = new TextureRegion(new Texture(Gdx.files.internal("laser.png")));
+        charge0 = Assets.instance().fromAtlas("laser_charge_0");
+        charge1 = Assets.instance().fromAtlas("laser_charge_1");
+        charge2 = Assets.instance().fromAtlas("laser_charge_2");
+        charge3 = Assets.instance().fromAtlas("laser_charge_3");
+        charge4 = Assets.instance().fromAtlas("laser_charge_4");
+        armed = Assets.instance().fromAtlas("laser_armed");
+        laser = Assets.instance().fromAtlas("laser");
 
         laserParticles = new ParticleEffect();
-        laserParticles.load(Gdx.files.internal("laser.pe"), Gdx.files.internal(""));
+        laserParticles.load(Gdx.files.internal("laser.pe"), Assets.instance().atlas());
         laserParticles.scaleEffect(1 / GameScreen.PPM);
     }
 

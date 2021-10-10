@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.game.physics.CannonRayCallback;
 import com.jaeheonshim.towerheist.Countdown;
 import com.jaeheonshim.towerheist.GameScreen;
@@ -40,8 +41,8 @@ public class Cannon extends GameObject {
 
         this.position = position;
 
-        safeTexture = new TextureRegion(new Texture(Gdx.files.internal("cannon_safe.png")));
-        armedTexture = new TextureRegion(new Texture(Gdx.files.internal("cannon_armed.png")));
+        safeTexture = Assets.instance().fromAtlas("cannon_safe");
+        armedTexture = Assets.instance().fromAtlas("cannon_armed");
     }
 
     @Override

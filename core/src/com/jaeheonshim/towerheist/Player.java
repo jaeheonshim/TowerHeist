@@ -3,6 +3,7 @@ package com.jaeheonshim.towerheist;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -32,7 +33,7 @@ public class Player {
     // To prevent incorrect state when sliding over two adjacent fixtures
     private Fixture currentFloorFixture;
 
-    private Texture texture;
+    private TextureRegion texture;
 
     private Countdown jumpLeeway = new Countdown(0.08f);
     private Countdown trailCountdown = new Countdown(0.05f);
@@ -41,7 +42,7 @@ public class Player {
         this.gameWorld = world;
         this.initPhysics(world.getPhysicsWorld(), initialPos);
 
-        texture = new Texture(Gdx.files.internal("player.png"));
+        texture = Assets.instance().fromAtlas("player");
     }
 
     private void initPhysics(World world, Vector2 initialPos) {
@@ -96,7 +97,6 @@ public class Player {
         trailCountdown.update(delta);
         body.setLinearVelocity(MathUtils.clamp(body.getLinearVelocity().x, -MAX_VELOCITY, MAX_VELOCITY), body.getLinearVelocity().y);
 
-        System.out.println(body.getLinearVelocity().x);
         if(!isMoving && Math.abs(body.getLinearVelocity().x) > 0) {
             body.applyForceToCenter(-(DECEL) * Math.signum(body.getLinearVelocity().x), 0, true);
             if(Math.abs(body.getLinearVelocity().x) < 3.5f) {
