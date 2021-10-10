@@ -42,6 +42,8 @@ public class Bullet extends GameObject implements Disposable {
         this.body = world.createBody(bodyDef);
         this.fixture = this.body.createFixture(fixtureDef);
         fixture.setUserData(new BulletFixtureUserData(this));
+
+        shape.dispose();
     }
 
     @Override

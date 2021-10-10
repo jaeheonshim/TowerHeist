@@ -211,6 +211,7 @@ public class GameWorld {
         Body body = physicsWorld.createBody(bodyDef);
         body.createFixture(floorFixture).setUserData(new FixtureUserData(FixtureType.BLOCK));
 
+        shape.dispose();
         return body;
     }
 

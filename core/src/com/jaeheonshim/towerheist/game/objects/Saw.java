@@ -55,6 +55,8 @@ public class Saw extends GameObject {
 
         this.body = gameWorld.getPhysicsWorld().createBody(def);
         this.body.createFixture(fixtureDef).setUserData(new FixtureUserData(FixtureType.DEATH));
+
+        shape.dispose();
     }
 
     public void update(float delta) {

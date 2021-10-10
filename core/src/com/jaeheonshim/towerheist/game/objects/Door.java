@@ -56,6 +56,8 @@ public class Door extends GameObject {
 
         this.body = gameWorld.getPhysicsWorld().createBody(bodyDef);
         this.body.createFixture(fixtureDef).setUserData(new DoorFixtureUserData(this));
+
+        shape.dispose();
     }
 
     @Override

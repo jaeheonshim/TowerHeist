@@ -42,6 +42,8 @@ public class Checkpoint extends GameObject {
         this.body = world.createBody(def);
         this.body.setUserData(this);
         this.body.createFixture(fixtureDef).setUserData(new CheckpointFixtureUserData(this));
+
+        shape.dispose();
     }
 
     public void draw(SpriteBatch spriteBatch) {

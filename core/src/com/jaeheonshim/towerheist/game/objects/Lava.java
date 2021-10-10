@@ -43,6 +43,8 @@ public class Lava extends GameObject {
         fixtureDef.shape = shape;
 
         gameWorld.getPhysicsWorld().createBody(bodyDef).createFixture(fixtureDef).setUserData(new FixtureUserData(FixtureType.DEATH));
+
+        shape.dispose();
     }
 
     @Override

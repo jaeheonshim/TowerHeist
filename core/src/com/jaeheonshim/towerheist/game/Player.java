@@ -91,6 +91,9 @@ public class Player {
         body.createFixture(rightFixture).setUserData(new PlayerFixtureUserData(PlayerFixtureUserData.ContactDirection.RIGHT));
 
         shape.dispose();
+        bottomCollider.dispose();
+        leftCollider.dispose();
+        rightCollider.dispose();
     }
 
     public void update(float delta) {

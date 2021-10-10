@@ -18,6 +18,8 @@ public class GameScreen implements Screen {
     public static final float PPM = 32;
 
     private GameWorld gameWorld;
+
+    private boolean doVfx;
     private VfxManager vfxManager;
     private BloomEffect bloomEffect;
 
@@ -59,16 +61,21 @@ public class GameScreen implements Screen {
         gameWorld.update(delta);
         gameCamera.followPosition(gameWorld.getPlayer().getPosition());
 
-        vfxManager.cleanUpBuffers();
-        vfxManager.beginInputCapture();
+        if(doVfx) {
+            vfxManager.cleanUpBuffers();
+            vfxManager.beginInputCapture();
+        }
+
         ScreenUtils.clear(0.9f, 0.9f, 0.9f, 1);
 
         gameWorld.render(spriteBatch);
 
-        vfxManager.endInputCapture();
-        vfxManager.applyEffects();
+        if(doVfx) {
+            vfxManager.endInputCapture();
+            vfxManager.applyEffects();
 
-        vfxManager.renderToScreen();
+            vfxManager.renderToScreen();
+        }
 
         if(renderDebug) {
             debugRenderer.render(gameWorld.getPhysicsWorld(), gameCamera.getCamera().combined);

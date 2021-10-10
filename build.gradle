@@ -67,7 +67,11 @@ project(":html") {
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
-        
+        implementation 'com.crashinvaders.vfx:gdx-vfx-core:0.5.0:sources'
+        implementation 'com.crashinvaders.vfx:gdx-vfx-gwt:0.5.0'
+        implementation 'com.crashinvaders.vfx:gdx-vfx-gwt:0.5.0:sources'
+
+        implementation 'com.crashinvaders.vfx:gdx-vfx-effects:0.5.0:sources'
     }
 }
 

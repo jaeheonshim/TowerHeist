@@ -79,7 +79,7 @@ public class WorldContactListener implements ContactListener {
     public void preSolve(Contact contact, Manifold oldManifold) {
         Fixture fixture;
 
-        if((fixture = checkXOR(contact, DoorFixtureUserData.class)) != null) {
+        if((fixture = checkXOR(contact, FixtureClass.DOOR)) != null) {
             DoorFixtureUserData doorFixtureUserData = ((DoorFixtureUserData) fixture.getUserData());
             if(!doorFixtureUserData.getDoor().isClosed()) {
                 contact.setEnabled(false);
@@ -120,7 +120,7 @@ public class WorldContactListener implements ContactListener {
         return null;
     }
 
-    public Fixture checkXOR(Contact contact, Class type) {
+    public Fixture checkXOR(Contact contact, FixtureClass type) {
         if(fixtureIsClass(contact.getFixtureA(), type) && fixtureIsClass(contact.getFixtureB(), type)) {
             return null;
         }
@@ -140,7 +140,7 @@ public class WorldContactListener implements ContactListener {
         return fixture.getUserData() instanceof FixtureUserData && ((FixtureUserData) fixture.getUserData()).getFixtureType() == fixtureType;
     }
 
-    public boolean fixtureIsClass(Fixture fixture, Class clazz) {
-        return clazz.isInstance(fixture.getUserData());
+    public boolean fixtureIsClass(Fixture fixture, FixtureClass clazz) {
+        return fixture.getUserData() instanceof FixtureUserData && ((FixtureUserData) fixture.getUserData()).getFixtureClass() == clazz;
     }
 }
