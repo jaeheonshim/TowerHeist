@@ -1,7 +1,17 @@
 package com.jaeheonshim.towerheist.game.physics;
 
+import com.jaeheonshim.towerheist.game.objects.Door;
+
 public class DoorFixtureUserData extends FixtureUserData {
-    public DoorFixtureUserData() {
+    private final Door door;
+
+    public DoorFixtureUserData(Door door) {
         super(FixtureType.BLOCK);
+
+        this.door = door;
+    }
+
+    public Door getDoor() {
+        return door;
     }
 }

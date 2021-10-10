@@ -77,7 +77,14 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
+        Fixture fixture;
 
+        if((fixture = checkXOR(contact, DoorFixtureUserData.class)) != null) {
+            DoorFixtureUserData doorFixtureUserData = ((DoorFixtureUserData) fixture.getUserData());
+            if(!doorFixtureUserData.getDoor().isClosed()) {
+                contact.setEnabled(false);
+            }
+        }
     }
 
     @Override
@@ -97,19 +104,43 @@ public class WorldContactListener implements ContactListener {
         return null;
     }
 
-    public Fixture checkXOR(Contact contact, Object userData) {
-        if(Objects.equals(contact.getFixtureA().getUserData(), userData) && Objects.equals(contact.getFixtureB().getUserData(), userData)) {
+    public Fixture checkXOR(Contact contact, FixtureType type) {
+        if(fixtureIsType(contact.getFixtureA(), type) && fixtureIsType(contact.getFixtureB(), type)) {
             return null;
         }
 
-        if(Objects.equals(contact.getFixtureA().getUserData(), userData)) {
+        if(fixtureIsType(contact.getFixtureA(), type)) {
             return contact.getFixtureA();
         }
 
-        if(Objects.equals(contact.getFixtureB().getUserData(), userData)) {
+        if(fixtureIsType(contact.getFixtureB(), type)) {
             return contact.getFixtureB();
         }
 
         return null;
+    }
+
+    public Fixture checkXOR(Contact contact, Class type) {
+        if(fixtureIsClass(contact.getFixtureA(), type) && fixtureIsClass(contact.getFixtureB(), type)) {
+            return null;
+        }
+
+        if(fixtureIsClass(contact.getFixtureA(), type)) {
+            return contact.getFixtureA();
+        }
+
+        if(fixtureIsClass(contact.getFixtureB(), type)) {
+            return contact.getFixtureB();
+        }
+
+        return null;
+    }
+
+    public boolean fixtureIsType(Fixture fixture, FixtureType fixtureType) {
+        return fixture.getUserData() instanceof FixtureUserData && ((FixtureUserData) fixture.getUserData()).getFixtureType() == fixtureType;
+    }
+
+    public boolean fixtureIsClass(Fixture fixture, Class clazz) {
+        return clazz.isInstance(fixture.getUserData());
     }
 }
