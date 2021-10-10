@@ -1,10 +1,8 @@
 package com.jaeheonshim.towerheist.game.physics;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.jaeheonshim.towerheist.GameWorld;
-import com.jaeheonshim.towerheist.Player;
-import com.jaeheonshim.towerheist.game.objects.Bullet;
-import com.jaeheonshim.towerheist.game.objects.Checkpoint;
+import com.jaeheonshim.towerheist.game.GameWorld;
+import com.jaeheonshim.towerheist.game.Player;
 
 import java.util.Objects;
 

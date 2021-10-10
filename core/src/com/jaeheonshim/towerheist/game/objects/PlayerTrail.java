@@ -1,15 +1,12 @@
 package com.jaeheonshim.towerheist.game.objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.jaeheonshim.towerheist.Assets;
-import com.jaeheonshim.towerheist.GameWorld;
-import com.jaeheonshim.towerheist.Player;
-import com.jaeheonshim.towerheist.game.GameObject;
+import com.jaeheonshim.towerheist.game.GameWorld;
+import com.jaeheonshim.towerheist.game.Player;
 
 import java.util.HashMap;
 import java.util.Iterator;

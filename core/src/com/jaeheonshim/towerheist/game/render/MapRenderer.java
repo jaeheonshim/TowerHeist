@@ -1,4 +1,4 @@
-package com.jaeheonshim.towerheist;
+package com.jaeheonshim.towerheist.game.render;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;

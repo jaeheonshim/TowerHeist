@@ -1,8 +1,8 @@
-package com.jaeheonshim.towerheist.game;
+package com.jaeheonshim.towerheist.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.jaeheonshim.towerheist.GameWorld;
-import com.jaeheonshim.towerheist.RenderItem;
+import com.jaeheonshim.towerheist.game.GameWorld;
+import com.jaeheonshim.towerheist.game.render.RenderItem;
 
 public abstract class GameObject extends RenderItem {
     protected final GameWorld gameWorld;

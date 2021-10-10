@@ -9,7 +9,7 @@ public class CannonRayCallback implements RayCastCallback {
 
     @Override
     public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-        if(fixture.getUserData().equals("FLOOR")) {
+        if(fixture.getUserData() instanceof FixtureUserData && ((FixtureUserData) fixture.getUserData()).getFixtureType() == FixtureType.BLOCK) {
             pathExists = false;
             return 0;
         }

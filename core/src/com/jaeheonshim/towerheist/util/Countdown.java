@@ -1,4 +1,4 @@
-package com.jaeheonshim.towerheist;
+package com.jaeheonshim.towerheist.util;
 
 public class Countdown {
     private float duration;

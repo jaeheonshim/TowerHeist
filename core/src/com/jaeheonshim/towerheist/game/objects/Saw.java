@@ -1,7 +1,5 @@
 package com.jaeheonshim.towerheist.game.objects;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -11,9 +9,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.jaeheonshim.towerheist.Assets;
-import com.jaeheonshim.towerheist.GameScreen;
-import com.jaeheonshim.towerheist.GameWorld;
-import com.jaeheonshim.towerheist.game.GameObject;
+import com.jaeheonshim.towerheist.game.GameScreen;
+import com.jaeheonshim.towerheist.game.GameWorld;
 import com.jaeheonshim.towerheist.game.physics.FixtureType;
 import com.jaeheonshim.towerheist.game.physics.FixtureUserData;
 

@@ -1,13 +1,13 @@
-package com.jaeheonshim.towerheist;
+package com.jaeheonshim.towerheist.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.game.physics.PlayerFixtureUserData;
+import com.jaeheonshim.towerheist.util.Countdown;
 
 public class Player {
     public static final float MAX_VELOCITY = 10f;

@@ -5,9 +5,8 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.jaeheonshim.towerheist.Assets;
-import com.jaeheonshim.towerheist.GameScreen;
-import com.jaeheonshim.towerheist.GameWorld;
-import com.jaeheonshim.towerheist.game.GameObject;
+import com.jaeheonshim.towerheist.game.GameScreen;
+import com.jaeheonshim.towerheist.game.GameWorld;
 
 public class DeathParticles extends GameObject {
     private ParticleEffect effect;

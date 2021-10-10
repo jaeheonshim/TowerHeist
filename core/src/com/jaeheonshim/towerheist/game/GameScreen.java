@@ -1,17 +1,18 @@
-package com.jaeheonshim.towerheist;
+package com.jaeheonshim.towerheist.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.BloomEffect;
-import com.crashinvaders.vfx.effects.GaussianBlurEffect;
+import com.jaeheonshim.towerheist.InputCommand;
+import com.jaeheonshim.towerheist.game.render.CameraManager;
 
 public class GameScreen implements Screen {
     public static final float PPM = 32;
@@ -46,7 +47,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(new GameInputProcessor(this, gameWorld));
     }
 
     @Override
@@ -104,6 +105,7 @@ public class GameScreen implements Screen {
         gameCamera.getViewport().update(width, height, true);
     }
 
+
     @Override
     public void pause() {
 
@@ -122,5 +124,9 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public CameraManager getGameCamera() {
+        return gameCamera;
     }
 }

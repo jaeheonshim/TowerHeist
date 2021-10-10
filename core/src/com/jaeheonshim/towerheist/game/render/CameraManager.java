@@ -1,4 +1,4 @@
-package com.jaeheonshim.towerheist;
+package com.jaeheonshim.towerheist.game.render;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;

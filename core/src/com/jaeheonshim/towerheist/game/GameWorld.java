@@ -1,4 +1,4 @@
-package com.jaeheonshim.towerheist;
+package com.jaeheonshim.towerheist.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -12,11 +12,15 @@ import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.jaeheonshim.towerheist.InputCommand;
 import com.jaeheonshim.towerheist.game.objects.*;
-import com.jaeheonshim.towerheist.game.GameObject;
+import com.jaeheonshim.towerheist.game.objects.GameObject;
 import com.jaeheonshim.towerheist.game.physics.FixtureType;
 import com.jaeheonshim.towerheist.game.physics.FixtureUserData;
 import com.jaeheonshim.towerheist.game.physics.WorldContactListener;
+import com.jaeheonshim.towerheist.game.render.MapRenderer;
+import com.jaeheonshim.towerheist.game.render.RenderManager;
+import com.jaeheonshim.towerheist.util.Countdown;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,7 @@ public class GameWorld {
     private MapLayer cannonLayer;
     private MapLayer lavaLayer;
     private MapLayer laserLayer;
+    private MapLayer doorLayer;
 
     private Player player;
     private Vector2 initialPos = new Vector2(5, 10);
@@ -71,6 +76,7 @@ public class GameWorld {
         configureCannons();
         configureLaser();
         configureCheckpoints();
+        configureDoors();
         configureColliders();
 
         this.deathParticles = new DeathParticles(this, 100);
@@ -88,10 +94,24 @@ public class GameWorld {
         this.cannonLayer = this.gameMap.getLayers().get("Cannon");
         this.lavaLayer = this.gameMap.getLayers().get("Lava");
         this.laserLayer = this.gameMap.getLayers().get("Laser");
+        this.doorLayer = this.gameMap.getLayers().get("Door");
     }
 
     public void configureMap() {
         renderManager.addItem(new MapRenderer(() -> (this.mapRenderer), currentZ++));
+    }
+
+    private void configureDoors() {
+        MapObjects objects = doorLayer.getObjects();
+
+        for(RectangleMapObject object : objects.getByType(RectangleMapObject.class)) {
+            Rectangle rectangle = object.getRectangle();
+            Door door = new Door(this, new Vector2(rectangle.x / GameScreen.PPM, rectangle.y / GameScreen.PPM), rectangle.height / GameScreen.PPM, currentZ);
+            gameObjects.add(door);
+            renderManager.addItem(door);
+        }
+
+        currentZ++;
     }
 
     private void configureLaser() {
