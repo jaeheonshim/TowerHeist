@@ -1,5 +1,6 @@
 package com.jaeheonshim.towerheist.game;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -19,7 +20,7 @@ public class GameScreen implements Screen {
 
     private GameWorld gameWorld;
 
-    private boolean doVfx;
+    private boolean doVfx = Gdx.app.getType() == Application.ApplicationType.Desktop;
     private VfxManager vfxManager;
     private BloomEffect bloomEffect;
 
