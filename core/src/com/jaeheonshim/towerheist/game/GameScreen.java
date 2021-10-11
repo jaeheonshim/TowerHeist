@@ -7,7 +7,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.crashinvaders.vfx.VfxManager;
@@ -30,7 +29,7 @@ public class GameScreen implements Screen {
 
     private CameraManager gameCamera;
 
-    private boolean renderDebug = false;
+    private boolean debugMode = false;
 
     public GameScreen() {
         gameWorld = new GameWorld();
@@ -78,7 +77,7 @@ public class GameScreen implements Screen {
             vfxManager.renderToScreen();
         }
 
-        if(renderDebug) {
+        if(debugMode) {
             debugRenderer.render(gameWorld.getPhysicsWorld(), gameCamera.getCamera().combined);
         }
     }
@@ -99,7 +98,7 @@ public class GameScreen implements Screen {
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.Z)) {
-            renderDebug = !renderDebug;
+            debugMode = !debugMode;
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
@@ -136,5 +135,9 @@ public class GameScreen implements Screen {
 
     public CameraManager getGameCamera() {
         return gameCamera;
+    }
+
+    public boolean isDebugMode() {
+        return debugMode;
     }
 }

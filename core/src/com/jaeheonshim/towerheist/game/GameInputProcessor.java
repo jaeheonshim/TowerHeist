@@ -31,8 +31,12 @@ public class GameInputProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        gameWorld.getPlayer().setPosition(gameScreen.getGameCamera().getViewport().unproject(new Vector2(screenX, screenY)));
-        return true;
+        if(gameScreen.isDebugMode()) {
+            gameWorld.getPlayer().setPosition(gameScreen.getGameCamera().getViewport().unproject(new Vector2(screenX, screenY)));
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
