@@ -1,5 +1,6 @@
 package com.jaeheonshim.towerheist.game.physics;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.jaeheonshim.towerheist.game.GameWorld;
 import com.jaeheonshim.towerheist.game.Player;
@@ -112,6 +113,14 @@ public class WorldContactListener implements ContactListener {
             world.getPlayer().carry(key);
 
             contact.setEnabled(false);
+        }
+
+        if((fixture = checkXOR(contact, FixtureType.PLATFORM)) != null && getPlayer(contact) != null) {
+            Vector2 playerPosition = world.getPlayer().getPosition();
+            Vector2 fixturePosition = fixture.getBody().getPosition();
+            if(playerPosition.y < fixturePosition.y) {
+                contact.setEnabled(false);
+            }
         }
     }
 
