@@ -16,7 +16,8 @@ import com.jaeheonshim.towerheist.game.GameWorld;
 import com.jaeheonshim.towerheist.game.physics.DoorFixtureUserData;
 
 public class Door extends GameObject {
-    public static final int OPEN_DURATION = 2;
+    public static final float OPEN_DURATION = 1f;
+    public static final float COLLIDER_THRESHOLD = 0.5f;
 
     private TextureRegion doorTexture;
     private TextureRegion doorOpenTexture;
@@ -68,9 +69,19 @@ public class Door extends GameObject {
         if(animationState == AnimationState.NONE) {
             renderHeight = closed ? this.height : height * openHeightPercentage;
         } else if(animationState == AnimationState.OPENING) {
+            // opening
             renderHeight = this.height - (1 - openHeightPercentage) * this.height * progress;
+
+            if(progress >= COLLIDER_THRESHOLD) {
+                closed = false;
+            }
         } else {
+            // closing
             renderHeight = this.height * openHeightPercentage + (1 - openHeightPercentage) * this.height * progress;
+
+            if(progress >= COLLIDER_THRESHOLD) {
+                closed = true;
+            }
         }
 
         batch.draw(closed ? doorTexture : doorOpenTexture, body.getPosition().x - width / 2, (body.getPosition().y - this.height / 2) + this.height - renderHeight, width, renderHeight);
@@ -105,12 +116,10 @@ public class Door extends GameObject {
     }
 
     public void open() {
-        this.closed = false;
         animationState = AnimationState.OPENING;
     }
 
     public void close() {
-        this.closed = true;
         animationState = AnimationState.CLOSING;
     }
 
