@@ -227,4 +227,16 @@ public class Player {
         this.currentCarryObject = carryable;
         carryable.beginCarry();
     }
+
+    public void stopCarry() {
+        if(this.currentCarryObject != null) {
+            this.currentCarryObject.endCarry();
+        }
+
+        this.currentCarryObject = null;
+    }
+
+    public Carryable getCurrentCarryObject() {
+        return currentCarryObject;
+    }
 }

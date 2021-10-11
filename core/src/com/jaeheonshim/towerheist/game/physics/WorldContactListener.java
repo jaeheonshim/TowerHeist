@@ -87,6 +87,17 @@ public class WorldContactListener implements ContactListener {
             }
         }
 
+        if((fixture = checkXOR(contact, FixtureClass.DOOR)) != null && getPlayer(contact) != null) {
+            DoorFixtureUserData doorFixtureUserData = ((DoorFixtureUserData) fixture.getUserData());
+            Player player = world.getPlayer();
+
+            if(doorFixtureUserData.getDoor().isClosed() && player.getCurrentCarryObject() != null && player.getCurrentCarryObject() instanceof Key) {
+                ((Key) player.getCurrentCarryObject()).queueDestroy();
+                doorFixtureUserData.getDoor().open();
+                contact.setEnabled(false);
+            }
+        }
+
         if((fixture = checkXOR(contact, FixtureClass.KEY)) != null && checkXOR(contact, FixtureType.PLAYER) != null) {
             KeyFixtureUserData keyFixtureUserData = ((KeyFixtureUserData) fixture.getUserData());
             Key key = keyFixtureUserData.getKey();

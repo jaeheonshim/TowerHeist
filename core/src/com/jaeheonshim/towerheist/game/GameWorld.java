@@ -23,6 +23,7 @@ import com.jaeheonshim.towerheist.game.render.RenderManager;
 import com.jaeheonshim.towerheist.util.Countdown;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GameWorld {
@@ -254,8 +255,20 @@ public class GameWorld {
 
         player.update(delta);
 
-        for(GameObject gameObject : gameObjects) {
+        Iterator<GameObject> gameObjectIterator = gameObjects.iterator();
+        while(gameObjectIterator.hasNext()) {
+            GameObject gameObject = gameObjectIterator.next();
             gameObject.update(delta);
+
+            if(gameObject.isQueueDestroy()) {
+                gameObject.destroy();
+                renderManager.remove(gameObject);
+                gameObjectIterator.remove();
+
+                if(player.getCurrentCarryObject() == gameObject) {
+                    player.stopCarry();
+                }
+            }
         }
 
         if(queueDeath) {

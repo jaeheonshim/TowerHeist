@@ -26,4 +26,8 @@ public class RenderManager {
             item.draw(spriteBatch);
         }
     }
+
+    public void remove(RenderItem renderItem) {
+        renderItemList.remove(renderItem);
+    }
 }

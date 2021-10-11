@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.game.GameScreen;
@@ -93,5 +90,12 @@ public class Key extends GameObject implements Carryable {
     @Override
     public void endCarry() {
         isCarried = false;
+    }
+
+    @Override
+    public void destroy() {
+        for(Fixture fixture : body.getFixtureList()) {
+            body.destroyFixture(fixture);
+        }
     }
 }
