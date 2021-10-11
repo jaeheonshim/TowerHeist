@@ -38,6 +38,7 @@ public class GameWorld {
     private MapLayer lavaLayer;
     private MapLayer laserLayer;
     private MapLayer doorLayer;
+    private MapLayer keyLayer;
 
     private Player player;
     private Vector2 initialPos = new Vector2(5, 10);
@@ -77,15 +78,12 @@ public class GameWorld {
         configureLaser();
         configureCheckpoints();
         configureDoors();
+        configureKeys();
         configureColliders();
 
         this.deathParticles = new DeathParticles(this, 100);
         this.renderManager.addItem(this.deathParticles);
         this.gameObjects.add(this.deathParticles);
-
-        Key key = new Key(this, new Vector2(10, 5), 100);
-        this.renderManager.addItem(key);
-        this.gameObjects.add(key);
 
         renderManager.initialize();
     }
@@ -99,10 +97,25 @@ public class GameWorld {
         this.lavaLayer = this.gameMap.getLayers().get("Lava");
         this.laserLayer = this.gameMap.getLayers().get("Laser");
         this.doorLayer = this.gameMap.getLayers().get("Door");
+        this.keyLayer = this.gameMap.getLayers().get("Key");
     }
 
     public void configureMap() {
         renderManager.addItem(new MapRenderer(() -> (this.mapRenderer), currentZ++));
+    }
+
+    private void configureKeys() {
+        MapObjects objects = keyLayer.getObjects();
+
+        for(RectangleMapObject object : objects.getByType(RectangleMapObject.class)) {
+            Rectangle rectangle = object.getRectangle();
+            Vector2 position = new Vector2(rectangle.x / GameScreen.PPM, rectangle.y / GameScreen.PPM);
+            Key key = new Key(this, position, currentZ);
+            gameObjects.add(key);
+            renderManager.addItem(key);
+        }
+
+        currentZ++;
     }
 
     private void configureDoors() {

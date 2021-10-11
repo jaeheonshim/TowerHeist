@@ -3,6 +3,7 @@ package com.jaeheonshim.towerheist.game.physics;
 import com.badlogic.gdx.physics.box2d.*;
 import com.jaeheonshim.towerheist.game.GameWorld;
 import com.jaeheonshim.towerheist.game.Player;
+import com.jaeheonshim.towerheist.game.objects.Key;
 
 import java.util.Objects;
 
@@ -84,6 +85,15 @@ public class WorldContactListener implements ContactListener {
             if(!doorFixtureUserData.getDoor().isClosed()) {
                 contact.setEnabled(false);
             }
+        }
+
+        if((fixture = checkXOR(contact, FixtureClass.KEY)) != null && checkXOR(contact, FixtureType.PLAYER) != null) {
+            KeyFixtureUserData keyFixtureUserData = ((KeyFixtureUserData) fixture.getUserData());
+            Key key = keyFixtureUserData.getKey();
+
+            world.getPlayer().carry(key);
+
+            contact.setEnabled(false);
         }
     }
 

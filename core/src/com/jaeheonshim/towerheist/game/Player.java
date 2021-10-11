@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.jaeheonshim.towerheist.Assets;
+import com.jaeheonshim.towerheist.game.objects.Carryable;
 import com.jaeheonshim.towerheist.game.physics.PlayerFixtureUserData;
 import com.jaeheonshim.towerheist.util.Countdown;
 
@@ -37,6 +38,8 @@ public class Player {
 
     private Countdown jumpLeeway = new Countdown(0.08f);
     private Countdown trailCountdown = new Countdown(0.05f);
+
+    private Carryable currentCarryObject;
 
     public Player(GameWorld world, Vector2 initialPos) {
         this.gameWorld = world;
@@ -114,6 +117,11 @@ public class Player {
 
         if(!touchingGround) {
             jumpLeeway.update(delta);
+        }
+
+        if(gameWorld.isDead() && currentCarryObject != null) {
+            currentCarryObject.endCarry();
+            currentCarryObject = null;
         }
     }
 
@@ -209,5 +217,14 @@ public class Player {
 
     public void setCurrentFloorFixture(Fixture currentFloorFixture) {
         this.currentFloorFixture = currentFloorFixture;
+    }
+
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    public void carry(Carryable carryable) {
+        this.currentCarryObject = carryable;
+        carryable.beginCarry();
     }
 }
