@@ -89,7 +89,14 @@ public class WorldContactListener implements ContactListener {
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
+        Fixture fixture;
 
+        if((fixture = checkXOR(contact, FixtureClass.DOOR)) != null) {
+            DoorFixtureUserData doorFixtureUserData = ((DoorFixtureUserData) fixture.getUserData());
+            if(!doorFixtureUserData.getDoor().isClosed()) {
+                contact.setEnabled(false);
+            }
+        }
     }
 
     public Fixture getPlayer(Contact contact) {

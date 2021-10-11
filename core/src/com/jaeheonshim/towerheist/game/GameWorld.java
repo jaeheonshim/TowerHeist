@@ -83,6 +83,10 @@ public class GameWorld {
         this.renderManager.addItem(this.deathParticles);
         this.gameObjects.add(this.deathParticles);
 
+        Key key = new Key(this, new Vector2(10, 5), 100);
+        this.renderManager.addItem(key);
+        this.gameObjects.add(key);
+
         renderManager.initialize();
     }
 
