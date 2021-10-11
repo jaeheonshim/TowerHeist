@@ -50,6 +50,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(new GameInputProcessor(this, gameWorld));
+        System.gc();
     }
 
     @Override

@@ -49,6 +49,13 @@ public class WorldContactListener implements ContactListener {
                     world.getPlayer().setTouchingWallL(begin);
                     break;
             }
+        } else if(otherData.getFixtureType() == FixtureType.PLATFORM && playerData.getDirection() == PlayerFixtureUserData.ContactDirection.BOTTOM) {
+            if(begin) {
+                world.getPlayer().setTouchingGround(true);
+                playerData.setCurrentBlock(other);
+            } else if(playerData.getCurrentBlock() == null || other == playerData.getCurrentBlock()) {
+                world.getPlayer().setTouchingGround(false);
+            }
         } else if(otherData.getFixtureType() == FixtureType.CHECKPOINT && begin) {
             CheckpointFixtureUserData checkpointData = ((CheckpointFixtureUserData) otherData);
             world.setCurrentCheckpoint(checkpointData.getCheckpoint());

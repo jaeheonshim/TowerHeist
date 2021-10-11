@@ -25,6 +25,7 @@ import com.jaeheonshim.towerheist.util.Countdown;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class GameWorld {
     public static final Vector2 GRAVITY = new Vector2(0, -57);
@@ -215,6 +216,7 @@ public class GameWorld {
 
     private Body createTiledBody(RectangleMapObject object) {
         Rectangle rectangle = object.getRectangle();
+        boolean platform = Objects.equals(object.getProperties().get("platform", Boolean.class), true);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -227,7 +229,7 @@ public class GameWorld {
         floorFixture.shape = shape;
 
         Body body = physicsWorld.createBody(bodyDef);
-        body.createFixture(floorFixture).setUserData(new FixtureUserData(FixtureType.BLOCK));
+        body.createFixture(floorFixture).setUserData(new FixtureUserData(platform ? FixtureType.PLATFORM : FixtureType.BLOCK));
 
         shape.dispose();
         return body;
