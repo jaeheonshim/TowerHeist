@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RenderManager {
     private List<RenderItem> renderItemList;
 
     public RenderManager() {
-        renderItemList = new ArrayList<>();
+        renderItemList = new LinkedList<>();
     }
 
     public void addItem(RenderItem renderItem) {

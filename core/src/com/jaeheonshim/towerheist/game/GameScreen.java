@@ -19,7 +19,7 @@ public class GameScreen implements Screen {
 
     private GameWorld gameWorld;
 
-    private boolean doVfx = Gdx.app.getType() == Application.ApplicationType.Desktop;
+    private boolean doVfx = false;
     private VfxManager vfxManager;
     private BloomEffect bloomEffect;
 
