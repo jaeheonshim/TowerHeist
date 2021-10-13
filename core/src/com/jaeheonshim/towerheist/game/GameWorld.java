@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class GameWorld {
-    public static final Vector2 GRAVITY = new Vector2(0, -57);
+    public static final Vector2 GRAVITY = new Vector2(0, -67);
 
     private World physicsWorld;
 

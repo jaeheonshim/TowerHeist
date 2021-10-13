@@ -91,15 +91,15 @@ public class GameScreen implements Screen {
     }
 
     public void processInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             gameWorld.sendInputCommand(InputCommand.JUMP);
         } else {
             gameWorld.sendInputCommand(InputCommand.RESET_JUMP);
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             gameWorld.sendInputCommand(InputCommand.MOVE_LEFT);
-        } else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        } else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
             gameWorld.sendInputCommand(InputCommand.MOVE_RIGHT);
         } else {
             gameWorld.sendInputCommand(InputCommand.STOP);

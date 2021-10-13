@@ -15,6 +15,7 @@ public class Player {
     public static final PlayerPhysicsConstants constants = new PlayerPhysicsConstants();
 
     public static final float WIDTH = 0.5f;
+    public static final float MIDAIR_DECEL_SCALE = 0.55f;
 
     private GameWorld gameWorld;
 
@@ -99,7 +100,7 @@ public class Player {
         body.setLinearVelocity(MathUtils.clamp(body.getLinearVelocity().x, -constants.maxVelocity.value, constants.maxVelocity.value), body.getLinearVelocity().y);
 
         if(!isMoving && Math.abs(body.getLinearVelocity().x) > 0) {
-            body.applyForceToCenter(-(constants.decel.value) * Math.signum(body.getLinearVelocity().x), 0, true);
+            body.applyForceToCenter(-(constants.decel.value) * Math.signum(body.getLinearVelocity().x) * (isTouchingGround() ? 1 : MIDAIR_DECEL_SCALE), 0, true);
             if(Math.abs(body.getLinearVelocity().x) < 3.5f) {
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }

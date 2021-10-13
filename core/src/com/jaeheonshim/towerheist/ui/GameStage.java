@@ -24,13 +24,13 @@ public class GameStage implements Disposable {
         stage = new Stage(stageViewport);
         table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+//        table.setDebug(true);
         stage.addActor(table);
 
         defaultSkin = new Skin(Gdx.files.internal("ui/uiskin.json"), Assets.instance().get("ui/uiskin.atlas"));
 
         physicsDebugWidget = new PlayerPhysicsDebugWidget(defaultSkin);
-        table.add(physicsDebugWidget).width(400).expand().top().right();
+        table.add(physicsDebugWidget).width(400).expand().bottom().left();
     }
 
     public void resize (int width, int height) {
