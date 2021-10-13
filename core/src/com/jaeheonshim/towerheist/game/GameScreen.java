@@ -13,10 +13,12 @@ import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.BloomEffect;
 import com.jaeheonshim.towerheist.InputCommand;
 import com.jaeheonshim.towerheist.game.render.CameraManager;
+import com.jaeheonshim.towerheist.ui.GameStage;
 
 public class GameScreen implements Screen {
     public static final float PPM = 32;
 
+    private GameStage gameStage;
     private GameWorld gameWorld;
 
     private boolean doVfx = false;
@@ -45,11 +47,14 @@ public class GameScreen implements Screen {
         mapRenderer = new OrthogonalTiledMapRenderer(gameWorld.getGameMap(), 1 / PPM);
 
         gameWorld.setMapRenderer(mapRenderer);
+
+        gameStage = new GameStage();
+        Gdx.input.setInputProcessor(gameStage.getStage());
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(new GameInputProcessor(this, gameWorld));
+//        Gdx.input.setInputProcessor(new GameInputProcessor(this, gameWorld));
         System.gc();
     }
 
@@ -81,6 +86,8 @@ public class GameScreen implements Screen {
         if(debugMode) {
             debugRenderer.render(gameWorld.getPhysicsWorld(), gameCamera.getCamera().combined);
         }
+
+        gameStage.render();
     }
 
     public void processInput() {
@@ -111,6 +118,7 @@ public class GameScreen implements Screen {
     public void resize(int width, int height) {
         vfxManager.resize(width, height);
         gameCamera.getViewport().update(width, height, true);
+        gameStage.resize(width, height);
     }
 
 

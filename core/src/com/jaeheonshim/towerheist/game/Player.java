@@ -8,18 +8,13 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.game.objects.Carryable;
 import com.jaeheonshim.towerheist.game.physics.PlayerFixtureUserData;
+import com.jaeheonshim.towerheist.game.physics.PlayerPhysicsConstants;
 import com.jaeheonshim.towerheist.util.Countdown;
 
 public class Player {
-    public static final float MAX_VELOCITY = 10f;
-    public static final float IMPULSE_X = 3;
-    public static final int IMPULSE_Y = 10;
-    public static final int G_OFFSET = 20;
-    public static final float SLIDE_VELOCITY = 0.5f;
-    public static final int DECEL = 200;
+    public static final PlayerPhysicsConstants constants = new PlayerPhysicsConstants();
+
     public static final float WIDTH = 0.5f;
-    public static final int WALL_BOUNCE = 12;
-    public static final int WALL_JUMP = 16;
 
     private GameWorld gameWorld;
 
@@ -101,10 +96,10 @@ public class Player {
 
     public void update(float delta) {
         trailCountdown.update(delta);
-        body.setLinearVelocity(MathUtils.clamp(body.getLinearVelocity().x, -MAX_VELOCITY, MAX_VELOCITY), body.getLinearVelocity().y);
+        body.setLinearVelocity(MathUtils.clamp(body.getLinearVelocity().x, -constants.maxVelocity.value, constants.maxVelocity.value), body.getLinearVelocity().y);
 
         if(!isMoving && Math.abs(body.getLinearVelocity().x) > 0) {
-            body.applyForceToCenter(-(DECEL) * Math.signum(body.getLinearVelocity().x), 0, true);
+            body.applyForceToCenter(-(constants.decel.value) * Math.signum(body.getLinearVelocity().x), 0, true);
             if(Math.abs(body.getLinearVelocity().x) < 3.5f) {
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }
@@ -136,10 +131,10 @@ public class Player {
 
         float coef = isTouchingGround() ? 1 : 0.5f;
         isMoving = true;
-        body.applyLinearImpulse(IMPULSE_X * coef * (left ? -1: 1), 0, 0, 0, true);
+        body.applyLinearImpulse(constants.impulseX.value * coef * (left ? -1: 1), 0, 0, 0, true);
 
         if((touchingWallR && left || touchingWallL && !left) && body.getLinearVelocity().y < 0) {
-            body.setLinearVelocity(body.getLinearVelocity().x, -SLIDE_VELOCITY);
+            body.setLinearVelocity(body.getLinearVelocity().x, -constants.wallSlideVelocity.value);
         }
     }
 
@@ -151,27 +146,27 @@ public class Player {
         if(gameWorld.isDead()) return;
 
         if(!jumpLeeway.isFinished() && canJump) {
-            body.applyLinearImpulse(0, IMPULSE_Y, 0, 0, true);
+            body.applyLinearImpulse(0, constants.impulseY.value, 0, 0, true);
             canJump = false;
             setTouchingGround(false);
         }
 
         if(touchingWallL && canJump) {
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            body.applyLinearImpulse(-WALL_BOUNCE, WALL_JUMP, 0, 0, true);
+            body.applyLinearImpulse(-constants.wallBounce.value, constants.wallJumpY.value, 0, 0, true);
             canJump = false;
             setTouchingGround(false);
         }
 
         if(touchingWallR && canJump) {
             body.setLinearVelocity(body.getLinearVelocity().x, 0);
-            body.applyLinearImpulse(WALL_BOUNCE, WALL_JUMP, 0, 0, true);
+            body.applyLinearImpulse(constants.wallBounce.value, constants.wallJumpY.value, 0, 0, true);
             canJump = false;
             setTouchingGround(false);
         }
 
         if(body.getLinearVelocity().y > 0) {
-            body.applyForceToCenter(0, G_OFFSET, true);
+            body.applyForceToCenter(0, constants.gOffset.value, true);
         }
     }
 

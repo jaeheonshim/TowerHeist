@@ -14,6 +14,7 @@ public class Assets {
 
     public void loadAssets() {
         assetManager.load("images.atlas", TextureAtlas.class);
+        assetManager.load("ui/uiskin.atlas", TextureAtlas.class);
         assetManager.finishLoading();
     }
 
@@ -26,6 +27,10 @@ public class Assets {
 
     public TextureAtlas atlas() {
         return assetManager.get("images.atlas");
+    }
+
+    public <T> T get(String s) {
+        return assetManager.get(s);
     }
 
     public static Assets instance() {
