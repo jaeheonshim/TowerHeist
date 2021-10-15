@@ -54,7 +54,20 @@ public class Player {
         this.body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((WIDTH / 2) * 0.9f, (WIDTH / 2) * 0.9f);
+        float width = (WIDTH / 2) * 0.9f;
+        float clipped = width * 0.8f;
+
+        shape.set(new float[] {
+                -width, -clipped,
+                -clipped, -width,
+                clipped, -width,
+                width, -clipped,
+                width, clipped,
+                clipped, width,
+                -clipped, width,
+                -width, clipped
+        });
+//        shape.setAsBox((WIDTH / 2) * 0.9f, (WIDTH / 2) * 0.9f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
