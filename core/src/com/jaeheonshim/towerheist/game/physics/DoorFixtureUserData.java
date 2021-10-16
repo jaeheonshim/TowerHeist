@@ -6,7 +6,7 @@ public class DoorFixtureUserData extends FixtureUserData {
     private final Door door;
 
     public DoorFixtureUserData(Door door) {
-        super(FixtureType.BLOCK, FixtureClass.DOOR);
+        super(FixtureType.OBJECT, FixtureClass.DOOR);
 
         this.door = door;
     }
