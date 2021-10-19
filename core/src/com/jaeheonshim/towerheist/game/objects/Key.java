@@ -12,10 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.game.GameScreen;
 import com.jaeheonshim.towerheist.game.GameWorld;
-import com.jaeheonshim.towerheist.game.physics.FixtureClass;
-import com.jaeheonshim.towerheist.game.physics.FixtureType;
-import com.jaeheonshim.towerheist.game.physics.FixtureUserData;
-import com.jaeheonshim.towerheist.game.physics.KeyFixtureUserData;
+import com.jaeheonshim.towerheist.game.physics.*;
 
 public class Key extends GameObject implements Carryable {
     public static final float SCALE = 0.5f;
@@ -54,6 +51,7 @@ public class Key extends GameObject implements Carryable {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
+        fixtureDef.filter.maskBits = WorldContactListener.PLAYER;
 
         this.body = gameWorld.getPhysicsWorld().createBody(bodyDef);
         this.body.createFixture(fixtureDef).setUserData(new KeyFixtureUserData(this));

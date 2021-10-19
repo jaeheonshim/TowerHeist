@@ -9,6 +9,7 @@ import com.jaeheonshim.towerheist.Assets;
 import com.jaeheonshim.towerheist.game.objects.Carryable;
 import com.jaeheonshim.towerheist.game.physics.PlayerFixtureUserData;
 import com.jaeheonshim.towerheist.game.physics.PlayerPhysicsConstants;
+import com.jaeheonshim.towerheist.game.physics.WorldContactListener;
 import com.jaeheonshim.towerheist.util.Countdown;
 
 public class Player {
@@ -73,6 +74,7 @@ public class Player {
         fixtureDef.shape = shape;
         fixtureDef.density = 4;
         fixtureDef.friction = 0;
+        fixtureDef.filter.categoryBits = WorldContactListener.PLAYER;
 
         PolygonShape bottomCollider = new PolygonShape();
         bottomCollider.setAsBox(WIDTH / 2 - 0.05f, 0.05f, new Vector2(0, -(WIDTH / 2 - 0.025f)), 0);
