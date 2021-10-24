@@ -9,8 +9,6 @@ import com.jaeheonshim.towerheist.game.objects.Key;
 import java.util.Objects;
 
 public class WorldContactListener implements ContactListener {
-    public static final short PHYSICSOBJECT = 0x1;
-    public static final short GAMEOBJECT = 0x2;
     public static final short PLAYER = 0x4;
 
     private GameWorld world;

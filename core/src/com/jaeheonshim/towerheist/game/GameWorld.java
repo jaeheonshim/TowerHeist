@@ -2,6 +2,7 @@ package com.jaeheonshim.towerheist.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -203,6 +204,17 @@ public class GameWorld {
             gameObjects.add(checkpoint);
             renderManager.addItem(checkpoint);
         }
+
+        MapObject endObject = objects.get("END");
+        if(endObject == null) {
+            throw new RuntimeException("Error: Map contains no END checkpoint");
+        }
+
+        Rectangle endPoint = ((RectangleMapObject) endObject).getRectangle();
+
+        Elevator elevator = new Elevator(this, new Vector2(endPoint.x / GameScreen.PPM, endPoint.y / GameScreen.PPM), currentZ);
+        gameObjects.add(elevator);
+        renderManager.addItem(elevator);
 
         currentZ++;
     }
