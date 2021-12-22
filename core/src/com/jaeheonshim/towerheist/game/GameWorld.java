@@ -70,10 +70,6 @@ public class GameWorld {
 //        createTestGround();
         loadMap();
 
-        this.playerTrail = new PlayerTrail(this, currentZ++);
-        this.renderManager.addItem(this.playerTrail);
-        this.gameObjects.add(this.playerTrail);
-
         configureLava();
         configureSaws();
         configureMap();
@@ -83,6 +79,10 @@ public class GameWorld {
         configureDoors();
         configureKeys();
         configureColliders();
+
+        this.playerTrail = new PlayerTrail(this, currentZ++);
+        this.renderManager.addItem(this.playerTrail);
+        this.gameObjects.add(this.playerTrail);
 
         this.deathParticles = new DeathParticles(this, 100);
         this.renderManager.addItem(this.deathParticles);

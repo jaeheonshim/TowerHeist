@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.BloomEffect;
 import com.jaeheonshim.towerheist.InputCommand;
+import com.jaeheonshim.towerheist.game.render.BackgroundRenderer;
 import com.jaeheonshim.towerheist.game.render.CameraManager;
 import com.jaeheonshim.towerheist.ui.GameStage;
 
@@ -27,6 +28,7 @@ public class GameScreen implements Screen {
 
     private SpriteBatch spriteBatch;
     private OrthogonalTiledMapRenderer mapRenderer;
+    private BackgroundRenderer backgroundRenderer;
     private Box2DDebugRenderer debugRenderer;
 
     private CameraManager gameCamera;
@@ -45,6 +47,7 @@ public class GameScreen implements Screen {
 
         debugRenderer = new Box2DDebugRenderer();
         mapRenderer = new OrthogonalTiledMapRenderer(gameWorld.getGameMap(), 1 / PPM);
+        backgroundRenderer = new BackgroundRenderer();
 
         gameWorld.setMapRenderer(mapRenderer);
 
@@ -60,7 +63,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        mapRenderer.setView(gameCamera.getCamera());
         spriteBatch.setProjectionMatrix(gameCamera.getCamera().combined);
 
         processInput();
@@ -72,7 +74,13 @@ public class GameScreen implements Screen {
             vfxManager.beginInputCapture();
         }
 
-        ScreenUtils.clear(0.9f, 0.9f, 0.9f, 1);
+        ScreenUtils.clear(1, 1, 1, 1);
+
+        backgroundRenderer.draw(spriteBatch);
+
+        gameCamera.getViewport().apply();
+        mapRenderer.setView(gameCamera.getCamera());
+        spriteBatch.setProjectionMatrix(gameCamera.getCamera().combined);
 
         gameWorld.render(spriteBatch);
 
@@ -119,6 +127,7 @@ public class GameScreen implements Screen {
         vfxManager.resize(width, height);
         gameCamera.getViewport().update(width, height, true);
         gameStage.resize(width, height);
+        backgroundRenderer.resize(width, height);
     }
 
 
