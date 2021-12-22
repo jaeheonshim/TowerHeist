@@ -1,0 +1,186 @@
+
+images.png
+size: 128, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+bullet
+  rotate: false
+  xy: 52, 266
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+cannon_armed
+  rotate: false
+  xy: 58, 434
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+cannon_safe
+  rotate: false
+  xy: 2, 252
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+checkpoint_set
+  rotate: false
+  xy: 52, 232
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+checkpoint_unset
+  rotate: false
+  xy: 52, 198
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+deathparticle
+  rotate: false
+  xy: 58, 342
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+door
+  rotate: false
+  xy: 108, 450
+  size: 14, 32
+  orig: 14, 32
+  offset: 0, 0
+  index: -1
+door_open
+  rotate: false
+  xy: 52, 62
+  size: 14, 32
+  orig: 14, 32
+  offset: 0, 0
+  index: -1
+key
+  rotate: false
+  xy: 2, 354
+  size: 54, 128
+  orig: 54, 128
+  offset: 0, 0
+  index: -1
+laser
+  rotate: false
+  xy: 52, 164
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+laser_armed
+  rotate: false
+  xy: 58, 384
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+laser_charge_0
+  rotate: false
+  xy: 2, 202
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+laser_charge_1
+  rotate: false
+  xy: 2, 152
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+laser_charge_2
+  rotate: false
+  xy: 2, 102
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+laser_charge_3
+  rotate: false
+  xy: 2, 52
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+laser_charge_4
+  rotate: false
+  xy: 2, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+lava
+  rotate: false
+  xy: 52, 130
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+player
+  rotate: false
+  xy: 2, 302
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+saw
+  rotate: false
+  xy: 52, 96
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+trail
+  rotate: false
+  xy: 54, 300
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+
+images2.png
+size: 1024, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+backdrop/repeated-square
+  rotate: false
+  xy: 2, 2
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+backdrop/sky
+  rotate: false
+  xy: 806, 178
+  size: 112, 224
+  orig: 112, 224
+  offset: 0, 0
+  index: -1
+backdrop/tic-tac-toe
+  rotate: false
+  xy: 404, 2
+  size: 400, 400
+  orig: 400, 400
+  offset: 0, 0
+  index: -1
+
+images3.png
+size: 256, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+elevator/closed
+  rotate: false
+  xy: 2, 2
+  size: 167, 251
+  orig: 167, 251
+  offset: 0, 0
+  index: -1
